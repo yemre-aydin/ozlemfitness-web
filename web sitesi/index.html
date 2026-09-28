@@ -160,8 +160,50 @@ p{margin:0}
 section{padding:clamp(72px,10vw,120px) 0}
 .lead{margin-top:16px;color:var(--muted);max-width:60ch}
 
-/* Hakkımızda */
-.about-body{margin-top:20px;color:var(--muted);max-width:70ch}
+/* ---------- BÖLÜM 2 · "ANTRENMANDAN DAHA FAZLASI" (Emel Hanım kodu) ----------
+   Fotoğraf sola/sağa yaslı, hero ile aynı maske tekniği.
+   Yüksek çözünürlüklü orijinal gelince sadece images/bolum2-bg.jpg değişecek. */
+.more{
+  position:relative;min-height:min(100vh,860px);display:flex;align-items:center;overflow:hidden;
+  background:var(--navy-900);
+  scroll-margin-top:84px;
+}
+.more::before{
+  content:"";position:absolute;top:0;right:0;bottom:0;width:60%;
+  background:url("images/bolum2-bg.jpg") left center/cover no-repeat;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 25%);
+          mask-image:linear-gradient(90deg,transparent 0%,#000 25%);
+}
+.more .wrap{position:relative;z-index:1;width:100%;padding-top:72px;padding-bottom:72px}
+.more-inner{max-width:720px}
+
+.more .brandline{margin:0;font-family:var(--head);font-weight:600;font-size:.85rem;letter-spacing:.2em;line-height:2}
+.more .brandline span{display:flex;align-items:center;gap:12px;font-weight:500;font-size:.8rem;letter-spacing:.06em;opacity:.9}
+.more .brandline .name{display:flex;align-items:center;gap:12px}
+.more .brandline .name::after{content:"";width:60px;height:1px;background:var(--ink);opacity:.6}
+.more .brandline::after{content:"";display:block;width:70px;height:4px;background:var(--blue);margin-top:14px;border-radius:2px}
+
+.more h2{margin:48px 0 0;font-family:var(--head);font-weight:700;font-size:clamp(2.3rem,5.4vw,4.6rem);line-height:1.08;letter-spacing:-.015em}
+.more h2 span{display:block}
+.more h2 .l2{color:var(--blue)}
+@media (min-width:721px){.more h2 span{white-space:nowrap}}
+
+.more p.lead{margin:22px 0 0;max-width:30ch;font-size:clamp(1.05rem,1.7vw,1.4rem);line-height:1.45}
+
+.btn-outline{display:inline-flex;align-items:center;gap:22px;margin-top:40px;padding:20px 34px;border:2px solid var(--blue);border-radius:14px;
+  font-family:var(--head);font-weight:600;font-size:1.1rem;color:var(--ink);text-decoration:none;transition:background .15s ease}
+.btn-outline:hover{background:rgba(30,150,240,.12)}
+.btn-outline svg{width:24px;height:24px;transition:transform .15s ease}
+.btn-outline:hover svg{transform:translateX(4px)}
+
+/* TERS DÜZEN: fotoğraf solda, yazı sağda (hero ile dönüşümlü) */
+@media (min-width:721px){
+  .more--reverse::before{right:auto;left:0;width:52%;background-position:left center;
+    -webkit-mask-image:linear-gradient(270deg,transparent 0%,#000 30%);
+            mask-image:linear-gradient(270deg,transparent 0%,#000 30%)}
+  .more--reverse .more-inner{margin-left:auto;max-width:560px}
+}
+@media (prefers-reduced-motion:reduce){.btn-outline,.btn-outline svg{transition:none}}
 
 /* ---------- BÖLÜM 3 · HİZMETLER (Emel Hanım kodu) ---------- */
 .services{padding:clamp(64px,9vw,120px) 0;background:var(--navy-900);scroll-margin-top:84px;overflow:hidden}
@@ -283,6 +325,14 @@ footer{padding:44px 0 calc(88px + env(safe-area-inset-bottom,0px));border-top:1p
   .proof li:first-child{border-top:0}
   .arrows{display:none}
   .steps{grid-template-columns:1fr}
+
+  /* Bölüm 2: fotoğraf üstte, yazı altta */
+  .more{flex-direction:column;align-items:stretch;min-height:0}
+  .more::before{position:relative;display:block;width:100%;height:80vw;max-height:460px;background-position:center 45%;
+    -webkit-mask-image:linear-gradient(180deg,#000 55%,transparent 100%);mask-image:linear-gradient(180deg,#000 55%,transparent 100%)}
+  .more .wrap{padding-top:8px;padding-bottom:56px}
+  .more h2{margin-top:32px}
+  .btn-outline{width:100%;justify-content:space-between}
 }
 </style>
 </head>
@@ -355,11 +405,29 @@ footer{padding:44px 0 calc(88px + env(safe-area-inset-bottom,0px));border-top:1p
     </div>
   </div>
 
-  <!-- HAKKIMIZDA -->
-  <section id="hakkimizda">
+  <!-- BÖLÜM 2 · ANTRENMANDAN DAHA FAZLASI (Emel Hanım kodu, 2026-09-28) -->
+  <section class="more more--reverse" id="hakkimizda" aria-labelledby="more-title">
     <div class="wrap">
-      <h2>Hakkımızda</h2>
-      <p class="about-body"><span class="todo">İçerik Emel Hanım'dan gelecek (işletme hikayesi, yaklaşım)</span></p>
+      <div class="more-inner">
+        <p class="brandline">
+          <span class="name">ÖZLEM FITNESS CENTER</span>
+          <span>BAHÇELİEVLER / İSTANBUL</span>
+        </p>
+
+        <h2 id="more-title">
+          <span>Antrenmandan</span>
+          <span class="l2">Daha Fazlası.</span>
+        </h2>
+
+        <p class="lead">Gücünü geliştirmek, doğru çalışmak ve bunu sürdürülebilir bir yaşam biçimine dönüştürmek için.</p>
+
+        <!-- BUTON HEDEFİ: "Keşfet" sayfası henüz yok. O hazır olana kadar
+             buton hizmet kartlarına (#hizmetler) iner. Sayfa hazır olunca sadece href'i değiştir. -->
+        <a class="btn-outline" href="#hizmetler" data-track="bolum2_kesfet">
+          Özlem Fitness'ı Keşfet
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
     </div>
   </section>
 
