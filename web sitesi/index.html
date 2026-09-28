@@ -250,13 +250,14 @@ section{padding:clamp(72px,10vw,120px) 0}
 .map iframe{width:100%;height:100%;min-height:340px;border:0;display:block;filter:grayscale(.3) contrast(1.05)}
 
 /* Footer */
-footer{padding:44px 0 calc(44px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);color:var(--muted);font-size:.92rem}
+footer{padding:44px 0 calc(88px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);color:var(--muted);font-size:.92rem}
 .foot{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
 .foot img{height:48px;width:auto}
 
 /* Sabit WhatsApp butonu */
-.wa-float{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:60;width:58px;height:58px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.35)}
-.wa-float svg{width:30px;height:30px}
+.wa-float{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:60;width:56px;height:56px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .25s ease}
+.wa-float svg{width:28px;height:28px}
+.wa-float.show{opacity:1;pointer-events:auto}
 
 /* ---------- MOBİL ---------- */
 @media (max-width:1080px){
@@ -271,8 +272,8 @@ footer{padding:44px 0 calc(44px + env(safe-area-inset-bottom,0px));border-top:1p
 }
 @media (max-width:720px){
   .hero::before{width:100%;background-position:center top;
-    -webkit-mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.45) 45%,transparent 85%);
-            mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.45) 45%,transparent 85%)}
+    -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 38%,transparent 62%);
+            mask-image:linear-gradient(180deg,#000 0%,#000 38%,transparent 62%)}
   .hero .wrap{padding-top:120px}
   .btn{width:100%}
   .scroll-hint{display:none}
@@ -296,7 +297,7 @@ footer{padding:44px 0 calc(44px + env(safe-area-inset-bottom,0px));border-top:1p
       <a href="#top" aria-current="page">Anasayfa</a>
       <a href="#hakkimizda">Hakkımızda</a>
       <a href="#hizmetler">Hizmetler</a>
-      <a href="#personal-training">Personal Training</a>
+      <a href="#ozel-ders">Özel Ders</a>
       <a href="#antrenorler">Antrenörlerimiz</a>
       <a href="#uyelik">Üyelik</a>
       <a href="#sss">SSS</a>
@@ -321,8 +322,8 @@ footer{padding:44px 0 calc(44px + env(safe-area-inset-bottom,0px));border-top:1p
         <p class="brandline reveal d1">ÖZLEM FITNESS CENTER<span>BAHÇELİEVLER / İSTANBUL</span></p>
         <h1 id="hero-title" class="reveal d2">
           <span class="l1">Doğru Antrenman.</span>
-          <span class="l2">Ölçülebilir Gelişim.</span>
-          <span class="l3">Güçlü Sonuçlar.</span>
+          <span class="l2">Birebir İlgi.</span>
+          <span class="l3">Deneyimli Kadro.</span>
         </h1>
         <p class="slogan reveal d3">Sporla Başla, Sağlıkla Devam Et.</p>
         <div class="cta-row reveal d4">
@@ -330,8 +331,8 @@ footer{padding:44px 0 calc(44px + env(safe-area-inset-bottom,0px));border-top:1p
             Üyelik Bilgisi Al
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
-          <a class="btn btn-line" href="#personal-training" data-track="hero_pt">
-            Personal Training'i İncele
+          <a class="btn btn-line" href="#ozel-ders" data-track="hero_pt">
+            Özel Dersi İncele
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
         </div>
@@ -469,9 +470,9 @@ footer{padding:44px 0 calc(44px + env(safe-area-inset-bottom,0px));border-top:1p
   </script>
 
   <!-- PERSONAL TRAINING -->
-  <section class="pt" id="personal-training">
+  <section class="pt" id="ozel-ders">
     <div class="wrap">
-      <h2>Personal Training</h2>
+      <h2>Özel Ders</h2>
       <p class="body">Birebir derste antrenman sizin hedefinize göre şekillenir. Başlangıç seviyeniz belirlenir, programınız hazırlanır ve gelişiminiz düzenli olarak ölçülür.</p>
       <a class="btn btn-red js-wa" data-msg="pt" data-track="wa_pt" href="#">
         Birebir Ders İçin Yazın
@@ -632,6 +633,17 @@ btn.addEventListener("click", () => {
 nav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
   nav.classList.remove("open"); btn.setAttribute("aria-expanded", false);
 }));
+
+/* Sabit WhatsApp butonu: hero ekrandayken gizli, aşağı kaydırınca görünür */
+const waFloat = document.querySelector(".wa-float");
+const heroSection = document.querySelector(".hero");
+if (waFloat && heroSection && "IntersectionObserver" in window) {
+  new IntersectionObserver(([entry]) => {
+    waFloat.classList.toggle("show", !entry.isIntersecting);
+  }).observe(heroSection);
+} else if (waFloat) {
+  waFloat.classList.add("show");
+}
 </script>
 </body>
 </html>
