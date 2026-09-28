@@ -163,13 +163,49 @@ section{padding:clamp(72px,10vw,120px) 0}
 /* Hakkımızda */
 .about-body{margin-top:20px;color:var(--muted);max-width:70ch}
 
-/* Hizmetler: kart yerine satır düzeni */
-.services{margin-top:48px;border-top:1px solid var(--line)}
-.service{display:grid;grid-template-columns:minmax(220px,1fr) 2fr;gap:32px;padding:34px 0;border-bottom:1px solid var(--line);align-items:baseline}
-.service h3{font-size:clamp(1.5rem,2.6vw,2rem);font-weight:700}
-.service p{color:var(--muted);max-width:58ch}
+/* ---------- BÖLÜM 3 · HİZMETLER (Emel Hanım kodu) ---------- */
+.services{padding:clamp(64px,9vw,120px) 0;background:var(--navy-900);scroll-margin-top:84px;overflow:hidden}
+.services .head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
+.services .eyebrow{margin:0;font-family:var(--head);font-weight:600;font-size:.85rem;letter-spacing:.2em}
+.services .eyebrow::after{content:"";display:block;width:70px;height:4px;background:var(--blue);margin-top:14px;border-radius:2px}
+.services h2{margin:28px 0 0;font-family:var(--head);font-weight:700;font-size:clamp(2rem,4.4vw,3.6rem);line-height:1.08;letter-spacing:-.015em}
+.services h2 span{color:var(--blue)}
+.services .lead{margin:14px 0 0;max-width:40ch;color:var(--muted);font-size:clamp(1rem,1.4vw,1.15rem);line-height:1.5}
 
-/* Personal training (antrenör profili ayrı bölümde: #antrenorlerimiz) */
+.arrows{display:flex;gap:12px;flex-shrink:0}
+.arrows button{width:52px;height:52px;border-radius:50%;border:2px solid rgba(242,245,250,.35);background:transparent;color:var(--ink);cursor:pointer;display:grid;place-items:center;transition:border-color .15s,background .15s}
+.arrows button:hover{border-color:var(--blue);background:rgba(30,150,240,.12)}
+.arrows button:disabled{opacity:.3;cursor:default}
+.arrows svg{width:22px;height:22px}
+
+.track{
+  list-style:none;margin:40px 0 0;padding:0 var(--pad) 8px;
+  display:flex;gap:clamp(14px,1.6vw,22px);
+  overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--pad);
+  scrollbar-width:none;-webkit-overflow-scrolling:touch;
+}
+.track::-webkit-scrollbar{display:none}
+@media (min-width:1392px){
+  .track{padding-inline:calc((100vw - var(--wrap))/2 + var(--pad));scroll-padding-inline:calc((100vw - var(--wrap))/2 + var(--pad))}
+}
+
+.card{flex:0 0 clamp(270px,78vw,380px);scroll-snap-align:start;position:relative;aspect-ratio:1/1;border-radius:18px;overflow:hidden;background:var(--navy-800)}
+.card video,.card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,14,28,0) 40%,rgba(6,14,28,.92) 100%);pointer-events:none}
+.card .body{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:22px 22px 20px}
+.card h3{margin:0;font-family:var(--head);font-weight:700;font-size:1.45rem;letter-spacing:-.01em}
+.card p{margin:6px 0 0;color:var(--muted);font-size:.98rem;line-height:1.4}
+.card a{margin-top:12px;display:inline-flex;align-items:center;gap:10px;font-family:var(--head);font-weight:600;font-size:1rem;color:var(--ink);text-decoration:none}
+.card a::before{content:"";position:absolute;inset:0;z-index:2}
+.card a svg{width:18px;height:18px;color:var(--blue);transition:transform .15s}
+.card:hover a svg{transform:translateX(4px)}
+
+.card .ph{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px;
+  background:repeating-linear-gradient(135deg,var(--navy-800) 0 14px,#0E1D38 14px 28px);color:var(--muted);font-size:.9rem}
+
+.todo{outline:2px dashed #F5C542;outline-offset:3px}
+
+/* Personal training (antrenör profili ayrı bölümde: #antrenorler) */
 .pt{background:var(--navy-800)}
 .pt p.body{margin-top:18px;color:var(--muted);max-width:62ch}
 .pt .btn{margin-top:30px}
@@ -244,7 +280,7 @@ footer{padding:44px 0 calc(44px + env(safe-area-inset-bottom,0px));border-top:1p
   .proof ul{grid-template-columns:1fr}
   .proof li{border-left:0;border-top:1px solid var(--line);padding:18px 0}
   .proof li:first-child{border-top:0}
-  .service{grid-template-columns:1fr;gap:10px}
+  .arrows{display:none}
   .steps{grid-template-columns:1fr}
 }
 </style>
@@ -261,7 +297,7 @@ footer{padding:44px 0 calc(44px + env(safe-area-inset-bottom,0px));border-top:1p
       <a href="#hakkimizda">Hakkımızda</a>
       <a href="#hizmetler">Hizmetler</a>
       <a href="#personal-training">Personal Training</a>
-      <a href="#antrenorlerimiz">Antrenörlerimiz</a>
+      <a href="#antrenorler">Antrenörlerimiz</a>
       <a href="#uyelik">Üyelik</a>
       <a href="#sss">SSS</a>
       <a href="#iletisim">İletişim</a>
@@ -326,27 +362,111 @@ footer{padding:44px 0 calc(44px + env(safe-area-inset-bottom,0px));border-top:1p
     </div>
   </section>
 
-  <!-- HİZMETLER -->
-  <section id="hizmetler">
+  <!-- BÖLÜM 3 · HİZMETLER (Emel Hanım kodu, 2026-09-28) -->
+  <section class="services" id="hizmetler" aria-labelledby="hizmetler-baslik">
     <div class="wrap">
-      <h2>Hizmetler</h2>
-      <p class="lead">Nereden başlarsanız başlayın, size uygun bir antrenman yolu var.</p>
-      <div class="services">
-        <div class="service">
-          <h3>Fitness</h3>
-          <p>Formda kalmak, kilo vermek ya da daha güçlü hissetmek için düzenli antrenman. Salonun tüm ekipmanlarını kendi temponuzda kullanırsınız.</p>
+      <div class="head">
+        <div>
+          <p class="eyebrow">HİZMETLER</p>
+          <h2 id="hizmetler-baslik">Sana uygun olanı <span>seç.</span></h2>
+          <p class="lead todo">[TASLAK METİN — onay bekliyor] Salondan birebir derse, hedefine göre başlayabileceğin seçenekler.</p>
         </div>
-        <div class="service">
-          <h3>Vücut geliştirme</h3>
-          <p>Kas kütlesi ve güç hedefleyenler için planlı, kademeli antrenman. Doğru teknik ve doğru yüklemeyle ilerlersiniz.</p>
-        </div>
-        <div class="service">
-          <h3>Birebir ders</h3>
-          <p>Antrenörünüz yanınızda. Programınız hedefinize göre hazırlanır, her seansta hareketleriniz düzeltilir ve gelişiminiz takip edilir.</p>
+        <div class="arrows" aria-hidden="false">
+          <button type="button" class="prev" aria-label="Önceki kart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+          <button type="button" class="next" aria-label="Sonraki kart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
         </div>
       </div>
     </div>
+
+    <ul class="track" aria-label="Hizmetler">
+      <!-- 1 · SALON -->
+      <li class="card">
+        <div class="ph todo">[VİDEO GELECEK]<br>Salon genel görünüm</div>
+        <div class="body">
+          <h3>Salon</h3>
+          <p class="todo">[AÇIKLAMA GELECEK]</p>
+          <a href="#fiyat-salon" data-track="kart_salon">Detayları Gör <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </li>
+
+      <!-- 2 · HOCALARIMIZ — fiyata değil antrenörler bölümüne gider -->
+      <li class="card">
+        <div class="ph todo">[VİDEO GELECEK]<br>Hocalar</div>
+        <div class="body">
+          <h3>Hocalarımız</h3>
+          <p class="todo">[AÇIKLAMA GELECEK]</p>
+          <a href="#antrenorler" data-track="kart_hocalar">Tanış <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </li>
+
+      <!-- 3 · ÖZEL DERS — video HAZIR -->
+      <li class="card">
+        <video muted loop playsinline preload="none" poster="images/kart-ozel-ders-poster.jpg" aria-label="Cengiz Adem Hoca birebir ders verirken">
+          <source src="images/kart-ozel-ders.mp4" type="video/mp4">
+        </video>
+        <div class="body">
+          <h3>Özel Ders</h3>
+          <p class="todo">[AÇIKLAMA GELECEK]</p>
+          <a href="#fiyat-ozel-ders" data-track="kart_ozel_ders">Detayları Gör <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </li>
+
+      <!-- 4 · KICKBOKS — video HAZIR -->
+      <li class="card">
+        <video muted loop playsinline preload="none" poster="images/kart-kickboks-poster.jpg" aria-label="Kickboks antrenmanı">
+          <source src="images/kart-kickboks.mp4" type="video/mp4">
+        </video>
+        <div class="body">
+          <h3>Kickboks</h3>
+          <p class="todo">[AÇIKLAMA GELECEK]</p>
+          <a href="#fiyat-kickboks" data-track="kart_kickboks">Detayları Gör <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </li>
+
+      <!-- 5 · SAATLİK / GÜNLÜK DERS -->
+      <li class="card">
+        <div class="ph todo">[VİDEO GELECEK]<br>Saatlik / günlük ders</div>
+        <div class="body">
+          <h3>Saatlik / Günlük Ders</h3>
+          <p class="todo">[AÇIKLAMA GELECEK]</p>
+          <a href="#fiyat-saatlik" data-track="kart_saatlik">Detayları Gör <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </li>
+    </ul>
   </section>
+  <script>
+  (function(){
+    var sec=document.getElementById('hizmetler');
+    var track=sec.querySelector('.track');
+    var prev=sec.querySelector('.prev'), next=sec.querySelector('.next');
+
+    function step(){var c=track.querySelector('.card');return c?c.getBoundingClientRect().width+parseFloat(getComputedStyle(track).columnGap||20):320}
+    prev.addEventListener('click',function(){track.scrollBy({left:-step(),behavior:'smooth'})});
+    next.addEventListener('click',function(){track.scrollBy({left:step(),behavior:'smooth'})});
+    function arrows(){prev.disabled=track.scrollLeft<=4;next.disabled=track.scrollLeft+track.clientWidth>=track.scrollWidth-4}
+    track.addEventListener('scroll',arrows,{passive:true});window.addEventListener('resize',arrows);arrows();
+
+    var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var vids=track.querySelectorAll('video');
+    if(!reduce&&'IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(es){
+        es.forEach(function(e){
+          var v=e.target;
+          if(e.isIntersecting&&e.intersectionRatio>=.6){if(v.preload==='none')v.preload='auto';var p=v.play();if(p&&p.catch)p.catch(function(){})}
+          else v.pause();
+        });
+      },{threshold:[0,.6]});
+      vids.forEach(function(v){io.observe(v)});
+    }
+
+    track.querySelectorAll('[data-track]').forEach(function(a){
+      a.addEventListener('click',function(){
+        var k=a.getAttribute('data-track');
+        if(window.gtag)gtag('event','select_content',{content_type:'hizmet_karti',item_id:k});
+      });
+    });
+  })();
+  </script>
 
   <!-- PERSONAL TRAINING -->
   <section class="pt" id="personal-training">
@@ -361,7 +481,7 @@ footer{padding:44px 0 calc(44px + env(safe-area-inset-bottom,0px));border-top:1p
   </section>
 
   <!-- ANTRENÖRLERİMİZ -->
-  <section id="antrenorlerimiz">
+  <section id="antrenorler">
     <div class="wrap coach-grid">
       <div class="coach-photo">
         <!-- Antrenörün gerçek fotoğrafı eklenecek: images/antrenor.jpg -->
