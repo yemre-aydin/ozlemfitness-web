@@ -1,0 +1,20 @@
+name: Supabase Keepalive
+
+# Supabase ucretsiz planda 7 gun API/DB trafigi olmayan projeler otomatik duraklatiliyor.
+# Site henuz Supabase'e canli baglanmadigi icin (WhatsApp yonlendirmeli), bu is haftada bir
+# gercek bir sorgu atip projeyi "aktif" tutuyor. CRM entegrasyonu devreye girince kaldirilabilir.
+
+on:
+  schedule:
+    - cron: "0 8 * * 1" # her Pazartesi 08:00 UTC
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Supabase REST API'ye sorgu at
+        run: |
+          curl -sf "https://auqnxvlzqbkdbzuetsyx.supabase.co/rest/v1/leads?select=id&limit=1" \
+            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}"
