@@ -1,20 +1,35 @@
 name: Supabase Keepalive
 
-# Supabase ucretsiz planda 7 gun API/DB trafigi olmayan projeler otomatik duraklatiliyor.
-# Site henuz Supabase'e canli baglanmadigi icin (WhatsApp yonlendirmeli), bu is haftada bir
-# gercek bir sorgu atip projeyi "aktif" tutuyor. CRM entegrasyonu devreye girince kaldirilabilir.
+# Supabase ucretsiz planda trafiksiz projeler otomatik duraklatiliyor (bir kere, sadece okuma
+# sorgusuyla bunu engelleyemedik). Bu is 6 gunde bir gercek bir INSERT + DELETE yapiyor —
+# yazma islemi, okumadan daha guvenilir "aktiflik" sayiliyor. Eklenen test satiri hemen siliniyor.
+# status='__keepalive__' disindaki satirlari anon key ASLA silemez (bkz. RLS policy).
+# CRM entegrasyonu devreye girince bu workflow kaldirilabilir.
 
 on:
   schedule:
-    - cron: "0 8 * * 1" # her Pazartesi 08:00 UTC
+    - cron: "0 8 */6 * *" # ~6 gunde bir, 08:00 UTC
   workflow_dispatch:
 
 jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Supabase REST API'ye sorgu at
+      - name: Test satiri ekle ve hemen sil
         run: |
-          curl -sf "https://auqnxvlzqbkdbzuetsyx.supabase.co/rest/v1/leads?select=id&limit=1" \
-            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
-            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}"
+          set -e
+          URL="https://auqnxvlzqbkdbzuetsyx.supabase.co/rest/v1/leads"
+          KEY="${{ secrets.SUPABASE_ANON_KEY }}"
+
+          ID=$(curl -sf -X POST "$URL" \
+            -H "apikey: $KEY" -H "Authorization: Bearer $KEY" \
+            -H "Content-Type: application/json" -H "Prefer: return=representation" \
+            -d '{"full_name":"Keepalive Test","status":"__keepalive__","notes":"otomatik, hemen silinir"}' \
+            | jq -r '.[0].id')
+
+          echo "Eklenen test satiri: $ID"
+
+          curl -sf -X DELETE "$URL?id=eq.$ID&status=eq.__keepalive__" \
+            -H "apikey: $KEY" -H "Authorization: Bearer $KEY"
+
+          echo "Silindi."
