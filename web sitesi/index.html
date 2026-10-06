@@ -565,9 +565,8 @@ section{padding:clamp(72px,10vw,120px) 0}
     function arrows(){prev.disabled=track.scrollLeft<=4;next.disabled=track.scrollLeft+track.clientWidth>=track.scrollWidth-4}
     track.addEventListener('scroll',arrows,{passive:true});window.addEventListener('resize',arrows);arrows();
 
-    var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var vids=track.querySelectorAll('video');
-    if(!reduce&&'IntersectionObserver' in window){
+    if('IntersectionObserver' in window){
       var io=new IntersectionObserver(function(es){
         es.forEach(function(e){
           var v=e.target;
@@ -576,6 +575,8 @@ section{padding:clamp(72px,10vw,120px) 0}
         });
       },{threshold:[0,.6]});
       vids.forEach(function(v){io.observe(v)});
+    } else {
+      vids.forEach(function(v){v.preload='auto';var p=v.play();if(p&&p.catch)p.catch(function(){});});
     }
 
     track.querySelectorAll('[data-track]').forEach(function(a){
@@ -754,8 +755,7 @@ section{padding:clamp(72px,10vw,120px) 0}
       <div>
         <h4>TAKİP ET</h4>
         <ul>
-          <!-- Özlem Fitness Instagram: bağlantı gelince href'i yaz ve hidden'ı kaldır -->
-          <li hidden><a href="#INSTAGRAM-BAGLANTISI" target="_blank" rel="noopener">Instagram · Özlem Fitness</a></li>
+          <li><a href="https://www.instagram.com/ozlemfitnesscenter/" target="_blank" rel="noopener">Instagram · Özlem Fitness</a></li>
           <li><a href="https://www.instagram.com/adem_yastas/" target="_blank" rel="noopener">Instagram · Cengiz Adem Hoca</a></li>
         </ul>
       </div>
@@ -782,9 +782,9 @@ section{padding:clamp(72px,10vw,120px) 0}
    ve hangi bölümden geldiğini görür ve WhatsApp'ta doğru etiketi koyar. */
 const WA_NUMBER = "905365848018";
 const WA_MESSAGES = {
-  genel:  "Merhaba, web sitenizden ulaşıyorum. Bilgi almak istiyorum.",
-  uyelik: "Merhaba, web sitenizden ulaşıyorum. Üyelik hakkında bilgi almak istiyorum.",
-  pt:     "Merhaba, web sitenizden ulaşıyorum. Birebir ders hakkında bilgi almak istiyorum."
+  genel:  "Merhaba, Özlem Fitness Center hakkında bilgi almak istiyorum.",
+  uyelik: "Merhaba, Özlem Fitness Center hakkında bilgi almak istiyorum.",
+  pt:     "Merhaba, özel ders hakkında bilgi almak istiyorum."
 };
 
 document.querySelectorAll(".js-wa").forEach(a => {
