@@ -15,8 +15,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
 
-<!-- YEREL SEO: Google'ın işletmeyi tanıması için yapılandırılmış veri.
-     Çalışma saatleri netleşince "openingHours" alanı eklenecek. -->
+<!-- YEREL SEO: Google'ın işletmeyi tanıması için yapılandırılmış veri. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -31,7 +30,12 @@
     "addressRegion": "İstanbul",
     "postalCode": "34180",
     "addressCountry": "TR"
-  }
+  },
+  "openingHoursSpecification": [
+    {"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"07:00","closes":"23:00"},
+    {"@type":"OpeningHoursSpecification","dayOfWeek":"Saturday","opens":"10:00","closes":"21:00"},
+    {"@type":"OpeningHoursSpecification","dayOfWeek":"Sunday","opens":"13:00","closes":"19:00"}
+  ]
 }
 </script>
 
@@ -149,11 +153,11 @@ p{margin:0}
 
 /* ---------- GÜVEN ŞERİDİ ---------- */
 .proof{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--navy-800)}
-.proof ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr)}
-.proof li{padding:26px 24px;border-left:1px solid var(--line)}
-.proof li:first-child{border-left:0;padding-left:0}
-.proof strong{display:block;font-family:var(--head);font-size:1.15rem;font-weight:600}
-.proof li:first-child strong{color:var(--gold)}
+.proof ul{list-style:none;margin:0;padding:0;display:flex;justify-content:center}
+.proof li{padding:0}
+.proof a{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;padding:22px 24px;text-decoration:none;border-radius:10px;transition:background .15s ease}
+.proof a:hover{background:rgba(30,150,240,.1)}
+.proof strong{display:block;font-family:var(--head);font-size:1.15rem;font-weight:600;color:var(--gold)}
 .proof span{color:var(--muted);font-size:.95rem}
 
 /* ---------- BÖLÜMLER ---------- */
@@ -190,12 +194,6 @@ section{padding:clamp(72px,10vw,120px) 0}
 
 .more p.lead{margin:22px 0 0;max-width:30ch;font-size:clamp(1.05rem,1.7vw,1.4rem);line-height:1.45}
 
-.btn-outline{display:inline-flex;align-items:center;gap:22px;margin-top:40px;padding:20px 34px;border:2px solid var(--blue);border-radius:14px;
-  font-family:var(--head);font-weight:600;font-size:1.1rem;color:var(--ink);text-decoration:none;transition:background .15s ease}
-.btn-outline:hover{background:rgba(30,150,240,.12)}
-.btn-outline svg{width:24px;height:24px;transition:transform .15s ease}
-.btn-outline:hover svg{transform:translateX(4px)}
-
 /* TERS DÜZEN: fotoğraf solda, yazı sağda (hero ile dönüşümlü) */
 @media (min-width:721px){
   .more--reverse::before{right:auto;left:0;width:52%;background-position:left center;
@@ -203,7 +201,6 @@ section{padding:clamp(72px,10vw,120px) 0}
             mask-image:linear-gradient(270deg,transparent 0%,#000 30%)}
   .more--reverse .more-inner{margin-left:auto;max-width:560px}
 }
-@media (prefers-reduced-motion:reduce){.btn-outline,.btn-outline svg{transition:none}}
 
 /* ---------- BÖLÜM 3 · HİZMETLER (Emel Hanım kodu) ---------- */
 .services{padding:clamp(64px,9vw,120px) 0;background:var(--navy-900);scroll-margin-top:84px;overflow:hidden}
@@ -240,13 +237,20 @@ section{padding:clamp(72px,10vw,120px) 0}
 .card .body{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:22px 22px 20px}
 .card h3{margin:0;font-family:var(--head);font-weight:700;font-size:1.45rem;letter-spacing:-.01em}
 .card p{margin:6px 0 0;color:var(--muted);font-size:.98rem;line-height:1.4}
-.card a{margin-top:12px;display:inline-flex;align-items:center;gap:10px;font-family:var(--head);font-weight:600;font-size:1rem;color:var(--ink);text-decoration:none}
-.card a::before{content:"";position:absolute;inset:0;z-index:2}
-.card a svg{width:18px;height:18px;color:var(--blue);transition:transform .15s}
-.card:hover a svg{transform:translateX(4px)}
+.card .cta{margin-top:12px;display:inline-flex;align-items:center;gap:10px;font-family:var(--head);font-weight:600;font-size:1rem;color:var(--ink);text-decoration:none;background:none;border:0;padding:0;cursor:pointer;font:inherit;text-align:left}
+.card .cta::before{content:"";position:absolute;inset:0;z-index:2}
+.card .cta svg{width:18px;height:18px;color:var(--blue);transition:transform .15s}
+.card:hover .cta svg{transform:translateX(4px)}
 
 .card .ph{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px;
   background:repeating-linear-gradient(135deg,var(--navy-800) 0 14px,#0E1D38 14px 28px);color:var(--muted);font-size:.9rem}
+
+.card .badge{position:absolute;top:14px;left:14px;z-index:3;background:var(--gold);color:var(--navy-900);font-family:var(--head);font-weight:700;font-size:.78rem;padding:6px 12px;border-radius:999px;letter-spacing:.02em}
+
+/* Beslenme İpuçları kartı: kapalıyken ilk 2 madde teaser olarak görünür */
+.card .teaser{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:4px;color:var(--muted);font-size:.9rem}
+.card .teaser li{padding-left:14px;position:relative}
+.card .teaser li::before{content:"•";position:absolute;left:0;color:var(--blue)}
 
 .todo{outline:2px dashed #F5C542;outline-offset:3px}
 
@@ -271,6 +275,11 @@ section{padding:clamp(72px,10vw,120px) 0}
 .tags{list-style:none;margin:20px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
 .tags li{padding:8px 14px;border:1px solid var(--line);border-radius:999px;font-size:.9rem;color:var(--ink)}
 
+.coach--reverse .coach-text{order:2}
+.coach--reverse .coach-photo{order:1;justify-self:start}
+.coach-photo .ph{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px;
+  background:repeating-linear-gradient(135deg,var(--navy-800) 0 14px,#0E1D38 14px 28px);color:var(--muted);font-size:.9rem}
+
 @media (max-width:820px){
   .coach{grid-template-columns:1fr}
   .coach-photo{order:0;justify-self:stretch;max-width:none}
@@ -290,18 +299,52 @@ section{padding:clamp(72px,10vw,120px) 0}
 .steps p{margin:8px 0 0;color:var(--muted);line-height:1.55}
 .start .btn{margin-top:28px}
 
-/* Üyelik kartı. Fiyat listesi gelince bu kartın yerine "Ders Ücretleri" tablosu gelecek. */
+/* Üyelik ve ücretler bölümü */
 .membership{padding:0 0 clamp(64px,9vw,120px);scroll-margin-top:84px}
-.m-card{padding:clamp(28px,4vw,48px);border-radius:20px;background:linear-gradient(160deg,var(--navy-700),var(--navy-800));border:1px solid var(--line);display:grid;grid-template-columns:1.2fr auto;gap:24px;align-items:center}
-.m-card h2{margin:0;font-size:clamp(1.8rem,3.2vw,2.6rem)}
-.m-card p{margin:12px 0 0;color:var(--muted);font-size:1.05rem;line-height:1.55;max-width:48ch}
+.membership .eyebrow{margin:0;font-family:var(--head);font-weight:600;font-size:.85rem;letter-spacing:.2em}
+.membership .eyebrow::after{content:"";display:block;width:70px;height:4px;background:var(--blue);margin-top:14px;border-radius:2px}
+.membership h2{margin:28px 0 0;font-family:var(--head);font-weight:700;font-size:clamp(2rem,4.4vw,3.4rem);line-height:1.08;letter-spacing:-.015em}
+.membership .lead{margin-top:14px;max-width:52ch}
 .anchor{display:block;position:relative;top:-100px;visibility:hidden}
+
+/* Fiyatları güncellemek için SADECE aşağıdaki script'teki MEMBERSHIP_PLANS listesini değiştir — tablo tek yerden besleniyor. */
+.pricing{list-style:none;margin:36px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.plan{position:relative;padding:26px 20px;border:1px solid var(--line);border-radius:16px;background:var(--navy-800);text-align:center}
+.plan--featured{border-color:var(--gold);background:linear-gradient(160deg,var(--navy-700),var(--navy-800))}
+.plan-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--navy-900);font-family:var(--head);font-weight:700;font-size:.72rem;padding:5px 14px;border-radius:999px;white-space:nowrap}
+.plan-period{display:block;font-family:var(--head);font-weight:600;font-size:.95rem;color:var(--muted)}
+.plan-price{display:block;margin-top:10px;font-family:var(--head);font-weight:800;font-size:1.55rem}
+.plan-sub{display:block;margin-top:4px;color:var(--muted);font-size:.85rem}
+.membership .btn{margin-top:28px}
+
+.pt-block{margin-top:56px;padding-top:40px;border-top:1px solid var(--line)}
+.pt-block h3{margin:0;font-family:var(--head);font-weight:700;font-size:clamp(1.4rem,2.2vw,1.8rem)}
+.pt-block p{margin:12px 0 0;color:var(--muted);line-height:1.55;max-width:56ch}
+.pt-block .pt-price{color:var(--ink);font-weight:600}
+.pt-block .btn{margin-top:20px}
+
+/* ---------- BÖLÜM 11 · BESLENME İPUÇLARI PANELİ ---------- */
+.nutrition-panel{margin-top:40px;padding:clamp(24px,4vw,40px);border:1px solid var(--line);border-radius:20px;background:var(--navy-800)}
+.nutrition-panel h3{margin:0;font-family:var(--head);font-weight:700;font-size:clamp(1.4rem,2.4vw,1.9rem)}
+.nutrition-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(24px,4vw,48px);margin-top:24px;align-items:start}
+.nutrition-photos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.nutrition-photos .ph{position:relative;aspect-ratio:1/1;border-radius:14px;display:grid;place-items:center;text-align:center;padding:12px;
+  background:repeating-linear-gradient(135deg,var(--navy-700) 0 14px,#0E1D38 14px 28px);color:var(--muted);font-size:.82rem}
+.nutrition-photos .ph:first-child{grid-column:1/-1;aspect-ratio:16/10}
+.tips{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.tips li{padding-left:20px;position:relative;color:var(--muted);line-height:1.5}
+.tips li::before{content:"✓";position:absolute;left:0;color:var(--blue);font-weight:700}
+.nutrition-note{margin-top:24px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
+@media (max-width:820px){.nutrition-grid{grid-template-columns:1fr}}
 
 @media (max-width:820px){
   .steps{grid-template-columns:1fr;gap:12px}
-  .m-card{grid-template-columns:1fr}
+  .pricing{grid-template-columns:1fr 1fr}
   .faq-grid{grid-template-columns:1fr}
   .contact-grid,.footer-top{grid-template-columns:1fr}
+}
+@media (max-width:480px){
+  .pricing{grid-template-columns:1fr}
 }
 
 /* ---------- BÖLÜM 6 · SIK SORULAN SORULAR (Emel Hanım kodu) ---------- */
@@ -371,9 +414,6 @@ section{padding:clamp(72px,10vw,120px) 0}
   .btn{width:100%}
   .scroll-hint{display:none}
   .logo img{height:50px}
-  .proof ul{grid-template-columns:1fr}
-  .proof li{border-left:0;border-top:1px solid var(--line);padding:18px 0}
-  .proof li:first-child{border-top:0}
   .arrows{display:none}
 
   /* Bölüm 2: fotoğraf üstte, yazı altta */
@@ -382,7 +422,6 @@ section{padding:clamp(72px,10vw,120px) 0}
     -webkit-mask-image:linear-gradient(180deg,#000 55%,transparent 100%);mask-image:linear-gradient(180deg,#000 55%,transparent 100%)}
   .more .wrap{padding-top:8px;padding-bottom:56px}
   .more h2{margin-top:32px}
-  .btn-outline{width:100%;justify-content:space-between}
 }
 </style>
 </head>
@@ -395,10 +434,9 @@ section{padding:clamp(72px,10vw,120px) 0}
     </a>
     <nav class="nav" id="nav" aria-label="Ana menü">
       <a href="#top" aria-current="page">Anasayfa</a>
-      <a href="#hakkimizda">Hakkımızda</a>
       <a href="#hizmetler">Hizmetler</a>
-      <a href="#hizmetler">Özel Ders</a>
       <a href="#antrenorler">Hocalarımız</a>
+      <a href="#hakkimizda">Hakkımızda</a>
       <a href="#uyelik">Üyelik</a>
       <a href="#sss">SSS</a>
       <a href="#iletisim">İletişim</a>
@@ -421,22 +459,18 @@ section{padding:clamp(72px,10vw,120px) 0}
       <div class="hero-inner">
         <p class="brandline reveal d1">ÖZLEM FITNESS CENTER<span>BAHÇELİEVLER / İSTANBUL</span></p>
         <h1 id="hero-title" class="reveal d2">
-          <span class="l1">Doğru Antrenman.</span>
-          <span class="l2">Birebir İlgi.</span>
-          <span class="l3">Deneyimli Kadro.</span>
+          <span class="l1">Güçlü beden.</span>
+          <span class="l2">Güçlü zihin.</span>
+          <span class="l3">Güçlü sen.</span>
         </h1>
-        <p class="slogan reveal d3">Sporla Başla, Sağlıkla Devam Et.</p>
+        <p class="slogan reveal d3">Milli sporcu Cengiz Adem Hoca eşliğinde, hedefine göre hazırlanan bir yol haritasıyla başla. İlk analiz ücretsiz.</p>
         <div class="cta-row reveal d4">
-          <a class="btn btn-red js-wa" data-msg="uyelik" data-track="wa_hero_uyelik" href="#">
-            Üyelik Bilgisi Al
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-          <a class="btn btn-line" href="#hizmetler" data-track="hero_pt">
-            Özel Dersi İncele
+          <a class="btn btn-red js-wa" data-msg="analiz" data-track="wa_hero_analiz" href="#">
+            Ücretsiz Analiz İçin Yaz
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
         </div>
-        <a class="scroll-hint reveal d5" href="#hakkimizda">
+        <a class="scroll-hint reveal d5" href="#hizmetler">
           <img src="images/fare-asagi-kaydir.svg" alt="" aria-hidden="true">
           Aşağı Kaydır
         </a>
@@ -448,46 +482,18 @@ section{padding:clamp(72px,10vw,120px) 0}
   <div class="proof">
     <div class="wrap">
       <ul>
-        <li><strong>Milli Sporcu & IFBB Antrenör</strong><span>Antrenmanın deneyimli bir sporcunun gözetiminde</span></li>
-        <li><strong>Birebir ders</strong><span>Hedefine göre kişisel program</span></li>
-        <li><strong>Bahçelievler</strong><span>İzzettin Çalışlar Cad. No: 31/B</span></li>
+        <li><a href="#antrenorler"><strong>Milli Sporcu & IFBB Antrenör</strong><span>Antrenmanın deneyimli bir sporcunun gözetiminde</span></a></li>
       </ul>
     </div>
   </div>
 
-  <!-- BÖLÜM 2 · ANTRENMANDAN DAHA FAZLASI (Emel Hanım kodu, 2026-09-28) -->
-  <section class="more more--reverse" id="hakkimizda" aria-labelledby="more-title">
-    <div class="wrap">
-      <div class="more-inner">
-        <p class="brandline">
-          <span class="name">ÖZLEM FITNESS CENTER</span>
-          <span>BAHÇELİEVLER / İSTANBUL</span>
-        </p>
-
-        <h2 id="more-title">
-          <span>Antrenmandan</span>
-          <span class="l2">Daha Fazlası.</span>
-        </h2>
-
-        <p class="lead">Gücünü geliştirmek, doğru çalışmak ve bunu sürdürülebilir bir yaşam biçimine dönüştürmek için.</p>
-
-        <!-- BUTON HEDEFİ: "Keşfet" sayfası henüz yok. O hazır olana kadar
-             buton hizmet kartlarına (#hizmetler) iner. Sayfa hazır olunca sadece href'i değiştir. -->
-        <a class="btn-outline" href="#hizmetler" data-track="bolum2_kesfet">
-          Özlem Fitness'ı Keşfet
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- BÖLÜM 3 · HİZMETLER (Emel Hanım kodu, 2026-09-28) -->
+  <!-- BÖLÜM 3 · HİZMETLER (Emel Hanım kodu, güncelleme 2026-10-07: sıralama hero'dan sonra geldi, kartlar kendi içeriklerine açılıyor) -->
   <section class="services" id="hizmetler" aria-labelledby="hizmetler-baslik">
     <div class="wrap">
       <div class="head">
         <div>
           <p class="eyebrow">HİZMETLER</p>
-          <h2 id="hizmetler-baslik">Sana uygun olanı <span>seç.</span></h2>
+          <h2 id="hizmetler-baslik">Sana uygun olanı&nbsp;<span>seç.</span></h2>
           <p class="lead">Salondan birebir derse, hedefine göre başlayabileceğin seçenekler.</p>
         </div>
         <div class="arrows" aria-hidden="false">
@@ -498,27 +504,40 @@ section{padding:clamp(72px,10vw,120px) 0}
     </div>
 
     <ul class="track" aria-label="Hizmetler">
-      <!-- 1 · SALON — video yeni çekimle gelecek -->
+      <!-- 1 · SALON — kart kendi içeriğine (Antrenmandan Daha Fazlası + salon görselleri) açılır -->
       <li class="card">
         <img src="images/kart-salon.jpg" alt="Özlem Fitness salonu, kırmızı koridor ve ağırlık aletleri" loading="lazy" width="720" height="720"><!-- Geçici fotoğraf: salon videosu yeni çekimle gelince <video> ile değişecek -->
         <div class="body">
           <h3>Salon</h3>
           <p>Geniş ekipman alanında kendi temponda çalış.</p>
-          <a href="#fiyat-salon" data-track="kart_salon">Detayları Gör <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="cta" href="#hakkimizda" data-track="kart_salon">Detayları Gör <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </li>
 
-      <!-- 2 · HOCALARIMIZ — fiyata değil antrenörler bölümüne gider -->
+      <!-- 2 · KICKBOKS — öne çıkan kart, video HAZIR -->
+      <li class="card">
+        <span class="badge">Öne Çıkan</span>
+        <video muted loop playsinline preload="none" poster="images/kart-kickboks-poster.jpg" aria-label="Kickboks antrenmanı">
+          <source src="images/kart-kickboks.mp4" type="video/mp4">
+        </video>
+        <div class="body">
+          <h3>Kickboks</h3>
+          <p>Torba ve teknik çalışmasıyla güç ve dayanıklılık kazan.</p>
+          <a class="cta" href="#antrenorler" data-track="kart_kickboks">Detayları Gör <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </li>
+
+      <!-- 3 · HOCALARIMIZ — antrenörler bölümüne gider -->
       <li class="card">
         <img src="images/kart-hocalar.jpg" alt="Salondaki madalya ve belge duvarı" loading="lazy" width="720" height="720"><!-- Geçici fotoğraf: hocaların portre çekimi gelince değişecek -->
         <div class="body">
           <h3>Hocalarımız</h3>
           <p>Cengiz Adem Hoca ve ekibi.</p>
-          <a href="#antrenorler" data-track="kart_hocalar">Tanış <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="cta" href="#antrenorler" data-track="kart_hocalar">Tanış <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </li>
 
-      <!-- 3 · ÖZEL DERS — video HAZIR -->
+      <!-- 4 · ÖZEL DERS — kendi fiyat+içerik bloğuna gider (Üyelik tablosuna değil) -->
       <li class="card">
         <video muted loop playsinline preload="none" poster="images/kart-ozel-ders-poster.jpg" aria-label="Cengiz Adem Hoca birebir ders verirken">
           <source src="images/kart-ozel-ders.mp4" type="video/mp4">
@@ -526,32 +545,84 @@ section{padding:clamp(72px,10vw,120px) 0}
         <div class="body">
           <h3>Özel Ders</h3>
           <p>Cengiz Adem Hoca eşliğinde birebir antrenman.</p>
-          <a href="#fiyat-ozel-ders" data-track="kart_ozel_ders">Detayları Gör <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="cta" href="#fiyat-ozel-ders" data-track="kart_ozel_ders">Detayları Gör <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </li>
 
-      <!-- 4 · KICKBOKS — video HAZIR -->
+      <!-- 5 · FITNESS / AĞIRLIK ANTRENMANI — görsel bekleniyor -->
       <li class="card">
-        <video muted loop playsinline preload="none" poster="images/kart-kickboks-poster.jpg" aria-label="Kickboks antrenmanı">
-          <source src="images/kart-kickboks.mp4" type="video/mp4">
-        </video>
+        <div class="ph">Görsel bekleniyor</div>
         <div class="body">
-          <h3>Kickboks</h3>
-          <p>Kickboks hocası eşliğinde torba ve teknik çalışması.</p>
-          <a href="#fiyat-kickboks" data-track="kart_kickboks">Detayları Gör <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <h3>Fitness / Ağırlık Antrenmanı</h3>
+          <p>Hedefine uygun ağırlık antrenmanı programıyla düzenli çalış.</p>
+          <a class="cta" href="#hakkimizda" data-track="kart_fitness">Detayları Gör <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </li>
 
-      <!-- 5 · SAATLİK / GÜNLÜK DERS -->
+      <!-- 6 · PİLATES (BİREBİR) — görsel bekleniyor -->
+      <li class="card">
+        <div class="ph">Görsel bekleniyor</div>
+        <div class="body">
+          <h3>Pilates</h3>
+          <p>Birebir pilates dersiyle duruşunu ve esnekliğini geliştir.</p>
+          <a class="cta" href="#antrenorler" data-track="kart_pilates">Detayları Gör <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </li>
+
+      <!-- 7 · SAATLİK / GÜNLÜK DERS — fiyatı henüz netleşmedi, WhatsApp'a yönlendir -->
       <li class="card">
         <img src="images/kart-saatlik.jpg" alt="Salonda antrenman yapan üyeler" loading="lazy" width="720" height="720"><!-- Geçici fotoğraf -->
         <div class="body">
           <h3>Saatlik / Günlük Ders</h3>
-          <p>Seçenekler ve ücretler için detaylara bak.</p>
-          <a href="#fiyat-saatlik" data-track="kart_saatlik">Detayları Gör <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <p>Seçenekler ve ücretler için WhatsApp'tan sor.</p>
+          <a class="cta js-wa" data-msg="genel" href="#" data-track="kart_saatlik">Bilgi Al <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </li>
+
+      <!-- 8 · BESLENME İPUÇLARI — kapalıyken ilk 2 madde teaser, açılınca tüm liste alttaki panelde -->
+      <li class="card">
+        <div class="ph">Görsel bekleniyor</div>
+        <div class="body">
+          <h3>Beslenme İpuçları</h3>
+          <p>Antrenman kadar sofran da önemli. Her gün işine yarayacak küçük bilgiler burada.</p>
+          <ul class="teaser">
+            <li>Antrenmandan önce bir avuç kuru üzüm, hızlı ve doğal bir enerji kaynağıdır.</li>
+            <li>Muz, kolay sindirilen karbonhidratı ve mineralleriyle spor öncesi pratik bir enerji kaynağıdır.</li>
+          </ul>
+          <button type="button" class="cta" id="nutritionToggle" aria-expanded="false" aria-controls="nutritionPanel" data-track="kart_beslenme">Devamını Gör <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         </div>
       </li>
     </ul>
+
+    <!-- Beslenme İpuçları — genişletilmiş panel. Görseller onaya gönderilecek, şimdilik yer tutucu. -->
+    <div class="wrap">
+      <div class="nutrition-panel" id="nutritionPanel" hidden>
+        <h3>Beslenme İpuçları</h3>
+        <div class="nutrition-grid">
+          <div class="nutrition-photos" aria-hidden="true">
+            <div class="ph">Meyve sepeti + kuruyemiş (onay bekleniyor)</div>
+            <div class="ph">Izgara tavuk + salata (onay bekleniyor)</div>
+            <div class="ph">Meyve tabağı (onay bekleniyor)</div>
+            <div class="ph">Yulaf kâsesi (onay bekleniyor)</div>
+          </div>
+          <ul class="tips">
+            <li>Antrenmandan önce bir avuç kuru üzüm, hızlı ve doğal bir enerji kaynağıdır.</li>
+            <li>Muz, kolay sindirilen karbonhidratı ve mineralleriyle spor öncesi pratik bir enerji kaynağıdır; kas kramplarını azaltmaya da yardımcı olabilir.</li>
+            <li>Kahvaltıda yulaf, seni uzun süre tok tutar ve enerjini gün boyu dengede tutar.</li>
+            <li>Antrenmandan sonra kasların proteine ihtiyaç duyar: tavuk, yumurta, yoğurt ya da balık iyi seçeneklerdir.</li>
+            <li>Somon ve ton balığı, hem protein hem de faydalı yağlar açısından zengindir.</li>
+            <li>Nohut gibi baklagiller, enerji veren karbonhidratı lifle birlikte sunar.</li>
+            <li>Brokoli, içerdiği lif sayesinde seni tok tutar; üstüne C vitamini de verir.</li>
+            <li>Yemekle birlikte içtiğin çay, besinlerdeki demirin emilimini azaltır. Çayını ara öğünde iç.</li>
+            <li>Yumurtanın yanına domates ya da biber eklersen, içindeki demirden daha çok faydalanırsın.</li>
+            <li>Kuruyemişin bir porsiyonu bir avuç kadardır; fazlası fayda değil, fazla kalori getirir.</li>
+            <li>Antrenmandan yaklaşık bir saat önce içtiğin bir fincan kahve, performansını destekleyebilir. Akşam antrenmanı yapıyorsan uykunu bozmaması için dikkat et.</li>
+            <li>Kahve içmeyi seviyorsan yanında su içmeyi ihmal etme; her fincan kahve için bir bardak su, sıvı dengeni korumana yardımcı olur.</li>
+          </ul>
+        </div>
+        <p class="nutrition-note">Bu bilgiler genel önerilerdir. Kişiye özel beslenme için bir uzmana danış.</p>
+      </div>
+    </div>
   </section>
   <script>
   (function(){
@@ -585,10 +656,20 @@ section{padding:clamp(72px,10vw,120px) 0}
         if(window.gtag)gtag('event','select_content',{content_type:'hizmet_karti',item_id:k});
       });
     });
+
+    var nutriBtn=document.getElementById('nutritionToggle');
+    var nutriPanel=document.getElementById('nutritionPanel');
+    if(nutriBtn&&nutriPanel){
+      nutriBtn.addEventListener('click',function(){
+        var open=nutriPanel.hasAttribute('hidden');
+        if(open){nutriPanel.removeAttribute('hidden');nutriBtn.setAttribute('aria-expanded','true');nutriPanel.scrollIntoView({behavior:'smooth',block:'start'})}
+        else{nutriPanel.setAttribute('hidden','');nutriBtn.setAttribute('aria-expanded','false')}
+      });
+    }
   })();
   </script>
 
-  <!-- BÖLÜM 4 · HOCALARIMIZ (Emel Hanım kodu, 2026-09-28) -->
+  <!-- BÖLÜM 4 · HOCALARIMIZ (Emel Hanım kodu, güncelleme 2026-10-07: Beklan Tütüncü eklendi, 3. hoca bekleniyor) -->
   <section class="coaches" id="antrenorler" aria-labelledby="coaches-title">
     <div class="wrap">
       <p class="eyebrow">HOCALARIMIZ</p>
@@ -602,7 +683,7 @@ section{padding:clamp(72px,10vw,120px) 0}
           <p class="coach-title">Milli Sporcu &amp; IFBB Antrenör</p>
           <p class="coach-bio">Fitness, bodybuilding ve birebir antrenman alanlarında uzun yıllara dayanan saha deneyimine sahip. Beslenme alanında da diploması bulunuyor.</p>
           <ul class="tags" aria-label="Uzmanlık alanları">
-            <li>Fitness</li><li>Bodybuilding</li><li>Özel Ders</li>
+            <li>Fitness</li><li>Bodybuilding</li><li>Özel Ders</li><li>Pilates</li><li>Kickboks</li><li>Beslenme Desteği</li>
           </ul>
           <a class="btn btn-red js-wa" data-msg="pt" data-track="wa_hoca" href="#">
             Cengiz Adem Hoca'ya Yaz
@@ -614,49 +695,115 @@ section{padding:clamp(72px,10vw,120px) 0}
         </div>
       </article>
 
-      <!-- HOCA 2 · KICKBOKS HOCASI — bilgiler Hoca'dan gelince açılacak.
-           İsim, unvan, kısa biyografi ve portre gelmeden bu bloğu AÇMA; tahminle bilgi yazma.
-      <article class="coach coach--reverse"> ... aynı yapı ... </article>
+      <!-- HOCA 2 · BEKLAN TÜTÜNCÜ — fotoğraf ve branş detayları ayrıca gelecek -->
+      <article class="coach coach--reverse">
+        <div class="coach-text">
+          <h3 class="coach-name">Beklan Tütüncü</h3>
+          <p class="coach-title">Personal Trainer &amp; Sporcu Koçu</p>
+          <p class="coach-bio">Sporun içinde birden fazla alanda yetişmiş bir eğitmen. Boks, yüzme ve bilek güreşinde lisanslı sporcu olarak yer aldı; vücut geliştirme yarışmalarında Türkiye dördüncülüğü ve beşincilik dereceleri var. Haliç Üniversitesi'nden personal trainer ve sporcu koçluğu eğitimleri aldı. Farklı salonlarda antrenörlük ve salon müdürlüğü yaparak edindiği tecrübeyi bugün Özlem Fitness'a taşıyor. Hedefin ne olursa olsun, seni doğru teknikle çalıştırır ve gelişimini adım adım takip eder.</p>
+          <ul class="tags" aria-label="Öne çıkanlar">
+            <li>Boks, yüzme ve bilek güreşinde lisanslı sporcu geçmişi</li>
+            <li>Vücut geliştirmede Türkiye 4.'lüğü</li>
+            <li>Haliç Üniversitesi personal trainer ve sporcu koçluğu eğitimleri</li>
+            <li>Salon antrenörlüğü ve müdürlük deneyimi</li>
+          </ul>
+          <a class="btn btn-red js-wa" data-msg="pt" data-track="wa_hoca_beklan" href="#">
+            Beklan Hoca'ya Yaz
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+        <div class="coach-photo"><div class="ph">Fotoğraf bekleniyor</div></div>
+      </article>
+
+      <!-- HOCA 3 — bilgiler gelince açılacak. İsim, unvan, kısa biyografi ve portre gelmeden bu bloğu AÇMA; tahminle bilgi yazma.
+      <article class="coach"> ... aynı yapı ... </article>
       -->
     </div>
   </section>
 
-  <!-- BÖLÜM 5 · NASIL BAŞLARIM (Emel Hanım kodu, 2026-09-28) -->
+  <!-- BÖLÜM 2 · ANTRENMANDAN DAHA FAZLASI (Emel Hanım kodu; güncelleme 2026-10-07: sırası Hocalarımız'dan sonraya alındı, "Keşfet" butonu kaldırıldı — tıklaması belirsiz bulunduğu için) -->
+  <section class="more more--reverse" id="hakkimizda" aria-labelledby="more-title">
+    <div class="wrap">
+      <div class="more-inner">
+        <p class="brandline">
+          <span class="name">ÖZLEM FITNESS CENTER</span>
+          <span>BAHÇELİEVLER / İSTANBUL</span>
+        </p>
+
+        <h2 id="more-title">
+          <span>Antrenmandan</span>
+          <span class="l2">Daha Fazlası.</span>
+        </h2>
+
+        <p class="lead">Gücünü geliştirmek, doğru çalışmak ve bunu sürdürülebilir bir yaşam biçimine dönüştürmek için.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BÖLÜM 5 · NASIL BAŞLARIM (Emel Hanım kodu, güncelleme 2026-10-07: adım metinleri yenilendi, fazla WA butonu kaldırıldı) -->
   <section class="start" id="nasil-baslarim" aria-labelledby="start-title">
     <div class="wrap">
       <p class="eyebrow">NASIL BAŞLARIM?</p>
       <h2 id="start-title">Üç adımda <span>başla.</span></h2>
       <ol class="steps">
-        <li><div class="n">1</div><h3>WhatsApp'tan yaz</h3><p>Hedefini ve sana uygun zamanı kısaca anlat.</p></li>
-        <li><div class="n">2</div><h3>Salonu tanı</h3><p>Gel, salonu ve hocanı yerinde gör.</p></li>
-        <li><div class="n">3</div><h3>Antrenmana başla</h3><p>Sana uygun programla ilk antrenmanını yap.</p></li>
+        <li><div class="n">1</div><h3>İletişime geç</h3><p>WhatsApp'tan bize ulaş, hedefini yaz, ücretsiz analiz görüşmeni planlayalım.</p></li>
+        <li><div class="n">2</div><h3>Salonumuzu keşfet</h3><p>Gel, salonu gör, Cengiz Hoca'yla tanış ve hedefine göre analizini birlikte yapalım.</p></li>
+        <li><div class="n">3</div><h3>Başla</h3><p>Analizine göre çıkardığımız yol haritasıyla ilk günden itibaren yanındayız.</p></li>
       </ol>
-      <a class="btn btn-red js-wa" data-msg="genel" data-track="wa_baslarim" href="#">
-        WhatsApp'tan Yaz
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
     </div>
   </section>
 
-  <!-- BÖLÜM 5 · ÜYELİK -->
+  <!-- BÖLÜM 5 · ÜYELİK (güncelleme 2026-10-07: gerçek fiyat tablosu + özel ders fiyatı eklendi.
+       Fiyat değiştirmek için SADECE alt script'teki MEMBERSHIP_PLANS listesini güncelle. Dondurma hakkı netleşmedi, henüz yazılmadı. -->
   <section class="membership" id="uyelik">
-    <!-- Hizmet kartlarının "Detayları Gör" bağlantıları şimdilik buraya iner.
-         Fiyat tablosu gelince her id ilgili fiyat satırına taşınacak. -->
-    <span class="anchor" id="fiyat-salon"></span><span class="anchor" id="fiyat-ozel-ders"></span>
-    <span class="anchor" id="fiyat-kickboks"></span><span class="anchor" id="fiyat-saatlik"></span>
     <div class="wrap">
-      <div class="m-card">
-        <div>
-          <h2>Üyelik ve ücretler</h2>
-          <p>Güncel üyelik seçenekleri ve ücretler için WhatsApp'tan yaz, hemen bilgi verelim.</p>
-        </div>
-        <a class="btn btn-red js-wa" data-msg="uyelik" data-track="wa_uyelik" href="#">
-          Üyelik Bilgisi Al
+      <p class="eyebrow">ÜYELİK VE ÜCRETLER</p>
+      <h2>Üyelik ve <span>ücretler.</span></h2>
+      <p class="lead">Aylık karşılıklarıyla birlikte güncel üyelik seçenekleri.</p>
+
+      <ul class="pricing" id="pricingGrid" aria-label="Üyelik planları"></ul>
+
+      <a class="btn btn-red js-wa" data-msg="uyelik" data-track="wa_uyelik" href="#">
+        Üyelik Bilgisi Al
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+
+      <div class="pt-block">
+        <span class="anchor" id="fiyat-ozel-ders"></span>
+        <h3>Özel Ders</h3>
+        <p class="pt-price">Cengiz Adem Hoca ile özel ders: 15.000 TL / ay</p>
+        <p>Aylık paket; haftalık sıklığını hocanla birlikte belirlersin.</p>
+        <p>Diğer hocalarımızla özel ders için ücretsiz analiz görüşmesinde sana uygun paketi birlikte belirleyelim.</p>
+        <a class="btn btn-red js-wa" data-msg="pt" data-track="wa_fiyat_ozel_ders" href="#">
+          Bilgi Al
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
       </div>
     </div>
   </section>
+  <script>
+  (function(){
+    /* Fiyat güncellemek için SADECE bu listeyi değiştir — tablo tek yerden besleniyor. */
+    var MEMBERSHIP_PLANS=[
+      {label:"1 Aylık",price:"3.000 TL"},
+      {label:"3 Aylık",price:"7.500 TL",sub:"aylık 2.500 TL"},
+      {label:"6 Aylık",price:"12.000 TL",sub:"aylık 2.000 TL"},
+      {label:"12 Aylık",price:"15.000 TL",sub:"aylık 1.250 TL",featured:true,badge:"En Avantajlı"}
+    ];
+    var grid=document.getElementById('pricingGrid');
+    MEMBERSHIP_PLANS.forEach(function(p){
+      var li=document.createElement('li');
+      li.className='plan'+(p.featured?' plan--featured':'');
+      var html='';
+      if(p.badge)html+='<span class="plan-badge">'+p.badge+'</span>';
+      html+='<span class="plan-period">'+p.label+'</span>';
+      html+='<span class="plan-price">'+p.price+'</span>';
+      if(p.sub)html+='<span class="plan-sub">'+p.sub+'</span>';
+      li.innerHTML=html;
+      grid.appendChild(li);
+    });
+  })();
+  </script>
 
   <!-- BÖLÜM 6 · SIK SORULAN SORULAR (Emel Hanım kodu, 2026-09-28) -->
   <section class="faq" id="sss" aria-labelledby="faq-title">
@@ -667,16 +814,16 @@ section{padding:clamp(72px,10vw,120px) 0}
       </div>
 
       <div>
-        <!-- 1 · SAATLER — Hoca'dan saatler gelince cevabı gerçek saatlerle değiştir -->
+        <!-- 1 · SAATLER -->
         <details class="qa">
           <summary>Çalışma saatleri nedir?</summary>
-          <p>Güncel çalışma saatlerini öğrenmek için WhatsApp'tan yazman yeterli, hemen bilgi verelim.</p>
+          <p>Hafta içi 07.00–23.00, Cumartesi 10.00–21.00, Pazar 13.00–19.00 arası açığız.</p>
         </details>
 
-        <!-- 2 · DENEME DERSİ — Hoca'nın cevabına göre netleşecek. Şu an var/yok iddiası YOK. -->
+        <!-- 2 · BAŞLAMA SÜRECİ -->
         <details class="qa">
-          <summary>Deneme dersi var mı?</summary>
-          <p>İlk ziyaretin ve deneme seçenekleri için WhatsApp'tan yaz, sana uygun zamanı birlikte planlayalım.</p>
+          <summary>Başlamadan önce ne yapıyoruz?</summary>
+          <p>Önce ücretsiz bir analiz görüşmesi yapıyoruz. Hedefini konuşuyor, ona göre sana özel bir yol haritası çıkarıyoruz.</p>
         </details>
 
         <!-- 3 · ÖZEL DERS -->
@@ -685,10 +832,10 @@ section{padding:clamp(72px,10vw,120px) 0}
           <p>Özel derste Cengiz Adem Hoca eşliğinde birebir çalışırsın. Hedefini ve sana uygun zamanı WhatsApp'tan yaz, detayları birlikte konuşalım.</p>
         </details>
 
-        <!-- 4 · ÜCRETLER — "Ders Ücretleri" tablosu gelince cevap tabloya bağlantı verecek -->
+        <!-- 4 · ÜCRETLER -->
         <details class="qa">
           <summary>Üyelik ücretleri ne kadar?</summary>
-          <p>Güncel üyelik seçenekleri ve ücretler için <a href="#uyelik">Üyelik ve ücretler</a> bölümünden WhatsApp'tan yaz, hemen bilgi verelim.</p>
+          <p>Güncel fiyatları <a href="#uyelik">Üyelik ve ücretler</a> bölümünde bulabilirsin.</p>
         </details>
 
         <!-- 5 · ULAŞIM -->
@@ -705,7 +852,9 @@ section{padding:clamp(72px,10vw,120px) 0}
     <div class="wrap contact-grid">
       <div>
         <p class="eyebrow">İLETİŞİM</p>
-        <h2 id="contact-title">Gel, <span>tanışalım.</span></h2>
+        <h2 id="contact-title">İletişim</h2>
+        <p class="lead">İlk adımı at, gerisini birlikte planlayalım.</p>
+        <p class="lead">İlk görüşme ve analiz ücretsiz.</p>
         <ul class="info">
           <li>
             <h3>Adres</h3>
@@ -718,8 +867,7 @@ section{padding:clamp(72px,10vw,120px) 0}
           </li>
           <li>
             <h3>Çalışma saatleri</h3>
-            <!-- GEÇİCİ: Hoca saatleri teyit edince bu satırı gerçek saatlerle değiştir -->
-            <p>Güncel saatler için WhatsApp'tan yaz.</p>
+            <p>Hafta içi 07.00–23.00<br>Cumartesi 10.00–21.00<br>Pazar 13.00–19.00</p>
           </li>
         </ul>
         <a class="btn btn-red js-wa" data-msg="genel" data-track="wa_iletisim" href="#">
@@ -784,7 +932,8 @@ const WA_NUMBER = "905365848018";
 const WA_MESSAGES = {
   genel:  "Merhaba, Özlem Fitness Center hakkında bilgi almak istiyorum.",
   uyelik: "Merhaba, Özlem Fitness Center hakkında bilgi almak istiyorum.",
-  pt:     "Merhaba, özel ders hakkında bilgi almak istiyorum."
+  pt:     "Merhaba, özel ders hakkında bilgi almak istiyorum.",
+  analiz: "Merhaba, ücretsiz analiz görüşmesi için bilgi almak istiyorum."
 };
 
 document.querySelectorAll(".js-wa").forEach(a => {
