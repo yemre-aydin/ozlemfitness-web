@@ -328,9 +328,10 @@ section{padding:clamp(72px,10vw,120px) 0}
 .nutrition-panel h3{margin:0;font-family:var(--head);font-weight:700;font-size:clamp(1.4rem,2.4vw,1.9rem)}
 .nutrition-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(24px,4vw,48px);margin-top:24px;align-items:start}
 .nutrition-photos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.nutrition-photos .ph{position:relative;aspect-ratio:1/1;border-radius:14px;display:grid;place-items:center;text-align:center;padding:12px;
+.nutrition-photos .ph,.nutrition-photos img{aspect-ratio:1/1;border-radius:14px;object-fit:cover;width:100%;height:100%;display:block}
+.nutrition-photos .ph{position:relative;display:grid;place-items:center;text-align:center;padding:12px;
   background:repeating-linear-gradient(135deg,var(--navy-700) 0 14px,#0E1D38 14px 28px);color:var(--muted);font-size:.82rem}
-.nutrition-photos .ph:first-child{grid-column:1/-1;aspect-ratio:16/10}
+.nutrition-photos .ph:first-child,.nutrition-photos img:first-child{grid-column:1/-1;aspect-ratio:16/10}
 .tips{list-style:none;margin:0;padding:0;display:grid;gap:14px}
 .tips li{padding-left:20px;position:relative;color:var(--muted);line-height:1.5}
 .tips li::before{content:"✓";position:absolute;left:0;color:var(--blue);font-weight:700}
@@ -581,7 +582,7 @@ section{padding:clamp(72px,10vw,120px) 0}
 
       <!-- 8 · BESLENME İPUÇLARI — kapalıyken ilk 2 madde teaser, açılınca tüm liste alttaki panelde -->
       <li class="card">
-        <div class="ph">Görsel bekleniyor</div>
+        <img src="images/beslenme-meyve-cerez.jpg" alt="Meyve sepeti ve kuruyemiş" loading="lazy" width="720" height="720">
         <div class="body">
           <h3>Beslenme İpuçları</h3>
           <p>Antrenman kadar sofran da önemli. Her gün işine yarayacak küçük bilgiler burada.</p>
@@ -594,16 +595,17 @@ section{padding:clamp(72px,10vw,120px) 0}
       </li>
     </ul>
 
-    <!-- Beslenme İpuçları — genişletilmiş panel. Görseller onaya gönderilecek, şimdilik yer tutucu. -->
+    <!-- Beslenme İpuçları — genişletilmiş panel. Görseller Emel Hanım'dan onaylı geldi (2026-10-07).
+         Proteinli/tavuklu salata görseli şimdilik kullanılmadı: ara öğün tavsiyesi metni onaylanınca eklenecek
+         (images/beslenme-proteinli-salata.jpg olarak klasörde duruyor). -->
     <div class="wrap">
       <div class="nutrition-panel" id="nutritionPanel" hidden>
         <h3>Beslenme İpuçları</h3>
         <div class="nutrition-grid">
           <div class="nutrition-photos" aria-hidden="true">
-            <div class="ph">Meyve sepeti + kuruyemiş (onay bekleniyor)</div>
-            <div class="ph">Izgara tavuk + salata (onay bekleniyor)</div>
-            <div class="ph">Meyve tabağı (onay bekleniyor)</div>
-            <div class="ph">Yulaf kâsesi (onay bekleniyor)</div>
+            <img src="images/beslenme-meyve-cerez.jpg" alt="" loading="lazy">
+            <img src="images/beslenme-salata.jpg" alt="" loading="lazy">
+            <img src="images/beslenme-protein-balik.jpg" alt="" loading="lazy">
           </div>
           <ul class="tips">
             <li>Antrenmandan önce bir avuç kuru üzüm, hızlı ve doğal bir enerji kaynağıdır.</li>
