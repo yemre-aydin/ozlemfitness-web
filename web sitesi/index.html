@@ -261,7 +261,7 @@ section{padding:clamp(72px,10vw,120px) 0}
 .coaches h2{margin:28px 0 0;font-family:var(--head);font-weight:700;font-size:clamp(2rem,4.4vw,3.6rem);line-height:1.08;letter-spacing:-.015em}
 .coaches h2 span{color:var(--blue)}
 
-.coach{margin-top:clamp(32px,4vw,48px);display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,5vw,64px);align-items:center}
+.coach{margin-top:clamp(32px,4vw,48px);display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,5vw,64px);align-items:center;scroll-margin-top:84px}
 .coach-text{order:1}
 .coach-photo{order:2;position:relative;aspect-ratio:4/5;max-width:460px;width:100%;justify-self:end;border-radius:18px;overflow:hidden;background:var(--navy-800)}
 .coach-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(1.05) brightness(.92)}
@@ -514,7 +514,7 @@ section{padding:clamp(72px,10vw,120px) 0}
         </div>
       </li>
 
-      <!-- 2 · KICKBOKS — öne çıkan kart, video HAZIR -->
+      <!-- 2 · KICKBOKS — öne çıkan kart, video HAZIR. Hoca bilgisi gelince #hoca-kickboks'taki kart açılacak -->
       <li class="card">
         <span class="badge">Öne Çıkan</span>
         <video muted loop playsinline preload="none" poster="images/kart-kickboks-poster.jpg" aria-label="Kickboks antrenmanı">
@@ -523,7 +523,7 @@ section{padding:clamp(72px,10vw,120px) 0}
         <div class="body">
           <h3>Kickboks</h3>
           <p>Torba ve teknik çalışmasıyla güç ve dayanıklılık kazan.</p>
-          <a class="cta" href="#antrenorler" data-track="kart_kickboks">Detayları Gör <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="cta" href="#hoca-kickboks" data-track="kart_kickboks">Detayları Gör <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </li>
 
@@ -549,13 +549,13 @@ section{padding:clamp(72px,10vw,120px) 0}
         </div>
       </li>
 
-      <!-- 5 · FITNESS / AĞIRLIK ANTRENMANI — görsel bekleniyor -->
+      <!-- 5 · FITNESS / AĞIRLIK ANTRENMANI — Beklan Hoca'nın kartına bağlanıyor, fotoğrafı gelince ph yerine görsel konacak -->
       <li class="card">
-        <div class="ph">Görsel bekleniyor</div>
+        <div class="ph">Fotoğraf bekleniyor</div>
         <div class="body">
           <h3>Fitness / Ağırlık Antrenmanı</h3>
-          <p>Hedefine uygun ağırlık antrenmanı programıyla düzenli çalış.</p>
-          <a class="cta" href="#hakkimizda" data-track="kart_fitness">Detayları Gör <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <p>Beklan Tütüncü ile birebir çalış.</p>
+          <a class="cta" href="#hoca-beklan" data-track="kart_fitness">Beklan Hoca'yı Tanı <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </li>
 
@@ -695,15 +695,15 @@ section{padding:clamp(72px,10vw,120px) 0}
         </div>
       </article>
 
-      <!-- HOCA 2 · BEKLAN TÜTÜNCÜ — fotoğraf ve branş detayları ayrıca gelecek -->
-      <article class="coach coach--reverse">
+      <!-- HOCA 2 · BEKLAN TÜTÜNCÜ — fotoğraf ayrıca gelecek -->
+      <article class="coach coach--reverse" id="hoca-beklan">
         <div class="coach-text">
           <h3 class="coach-name">Beklan Tütüncü</h3>
-          <p class="coach-title">Personal Trainer &amp; Sporcu Koçu</p>
-          <p class="coach-bio">Sporun içinde birden fazla alanda yetişmiş bir eğitmen. Boks, yüzme ve bilek güreşinde lisanslı sporcu olarak yer aldı; vücut geliştirme yarışmalarında Türkiye dördüncülüğü ve beşincilik dereceleri var. Haliç Üniversitesi'nden personal trainer ve sporcu koçluğu eğitimleri aldı. Farklı salonlarda antrenörlük ve salon müdürlüğü yaparak edindiği tecrübeyi bugün Özlem Fitness'a taşıyor. Hedefin ne olursa olsun, seni doğru teknikle çalıştırır ve gelişimini adım adım takip eder.</p>
+          <p class="coach-title">Personal Trainer · Fitness ve Ağırlık Antrenmanı</p>
+          <p class="coach-bio">Sporun içinde birden fazla alanda yetişmiş bir eğitmen. Boks, yüzme ve bilek güreşinde lisanslı sporcu olarak yer aldı; vücut geliştirme yarışmalarında Türkiye dördüncülüğü ve beşincilik dereceleri var. Haliç Üniversitesi'nden personal trainer ve sporcu koçluğu eğitimleri aldı. Farklı salonlarda antrenörlük ve salon müdürlüğü yaparak edindiği tecrübeyi bugün Özlem Fitness'a taşıyor. Salonda özellikle fitness ve ağırlık antrenmanında üyelerle birebir çalışıyor. Hedefin ne olursa olsun, seni doğru teknikle çalıştırır ve gelişimini adım adım takip eder.</p>
           <ul class="tags" aria-label="Öne çıkanlar">
             <li>Boks, yüzme ve bilek güreşinde lisanslı sporcu geçmişi</li>
-            <li>Vücut geliştirmede Türkiye 4.'lüğü</li>
+            <li>Vücut geliştirmede Türkiye 4.'sü</li>
             <li>Haliç Üniversitesi personal trainer ve sporcu koçluğu eğitimleri</li>
             <li>Salon antrenörlüğü ve müdürlük deneyimi</li>
           </ul>
@@ -715,7 +715,10 @@ section{padding:clamp(72px,10vw,120px) 0}
         <div class="coach-photo"><div class="ph">Fotoğraf bekleniyor</div></div>
       </article>
 
-      <!-- HOCA 3 — bilgiler gelince açılacak. İsim, unvan, kısa biyografi ve portre gelmeden bu bloğu AÇMA; tahminle bilgi yazma.
+      <!-- HOCA 3 · KICKBOKS HOCASI — bilgiler gelince açılacak. İsim, unvan, kısa biyografi ve portre gelmeden bu bloğu AÇMA; tahminle bilgi yazma.
+           Kaydırmalı kartlardaki Kickboks kartı şimdilik bu anchor'a bağlanıyor, hoca kartı eklenince aynı konumda kalacak. -->
+      <span class="anchor" id="hoca-kickboks"></span>
+      <!--
       <article class="coach"> ... aynı yapı ... </article>
       -->
     </div>
