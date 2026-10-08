@@ -9,22 +9,22 @@ gereken kurulumu anlatır.
 tarayıcı konsoluna yazılıyor). Bu kurulum tamamlanıp aşağıdaki adım 4'teki URL `index.html` içine
 yapıştırılınca gerçek gönderim başlayacak.
 
-**Kim kuracak:** Bu kurulum, Yunus Emre'nin (veya Cengiz Hoca'nın) kendi Google hesabından yapılmalı —
-Claude bu adımı deploy edemez çünkü Google hesabı erişimi ve WhatsApp numarası onayı gerektirir.
+**Kim kuracak:** Adım 1 (tabloyu oluşturmak) tamamlandı. Adım 2'den itibaren (Apps Script, Dağıt,
+CallMeBot aktivasyonu) Yunus Emre'nin (veya Cengiz Hoca'nın) kendi Google/WhatsApp hesabından yapması
+gerekiyor — Claude bunları deploy edemez çünkü Google hesabı erişimi ve WhatsApp numarası onayı gerektirir.
 
 ---
 
-## Adım 1 — Google E-Tablosu oluştur
+## Adım 1 — Google E-Tablosu ✅ oluşturuldu
 
-1. [sheets.google.com](https://sheets.google.com) → yeni boş e-tablo aç.
-2. Adını "Özlem Fitness — Form Başvuruları" yap.
-3. 1. satıra (A1'den başlayarak) şu başlıkları aynen yaz:
+Tablo hazır, başlık satırı yazılı: **[Özlem Fitness — Form Başvuruları](https://docs.google.com/spreadsheets/d/1-uoC7MkGRYOOvMLcqaPyJiXREalBm0MtKDA2QKdvfv0/edit)**
+(yeaydin.digital@gmail.com hesabında).
 
 | A | B | C | D | E | F | G | H |
 |---|---|---|---|---|---|---|---|
 | Tarih-Saat | Ad | Telefon | Doğum Günü | E-posta | Hangi Butondan Geldi | Aydınlatma Okundu | Ticari İleti İzni |
 
-4. Tabloyu kaydet, URL'sini not al (adım 2'de gerekmeyecek ama ileride bakmak için işe yarar).
+Sekme adı şu an "Untitled" duruyor — dilersen açıp alt sekmeye çift tıklayıp "Başvurular" gibi bir isim verebilirsin, zorunlu değil.
 
 ## Adım 2 — Apps Script kodunu ekle
 
