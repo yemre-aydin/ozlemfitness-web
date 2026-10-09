@@ -363,18 +363,19 @@ section{padding:clamp(72px,10vw,120px) 0}
 @media (max-width:480px){.milestones{grid-template-columns:1fr}}
 
 /* "Hocalarımız" modali içindeki hoca kutuları */
-.mcoach{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(24px,4vw,40px);align-items:start;padding:28px 0;border-top:1px solid var(--line)}
+.mcoach{padding:28px 0;border-top:1px solid var(--line)}
 .mcoach:first-of-type{border-top:0;padding-top:0}
-.mcoach-photo{position:relative;aspect-ratio:4/5;border-radius:16px;overflow:hidden;background:var(--navy-700)}
+.mcoach-name{margin:0 0 16px;font-family:var(--head);font-weight:700;font-size:1.4rem}
+.mcoach-photo{position:relative;max-width:420px;margin:0 auto;aspect-ratio:4/5;border-radius:16px;overflow:hidden;background:var(--navy-700)}
 .mcoach-photo img{width:100%;height:100%;object-fit:cover;display:block}
 .mcoach-photo .ph-empty{position:absolute;inset:0;background:#2A3347}
+.mcoach-text{margin-top:24px}
 .mcoach-title{margin:0;color:var(--muted);font-size:.95rem}
 .mcoach-highlight{margin:10px 0 0;color:var(--blue);font-family:var(--head);font-weight:700}
 .mcoach-bio{margin:14px 0 0;color:var(--muted);line-height:1.6}
 .mcoach .tags{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-wrap:wrap;align-items:center;color:var(--muted);font-size:.9rem}
 .mcoach .tags li{display:inline}
 .mcoach .tags li+li::before{content:"·";margin:0 8px;color:var(--blue)}
-@media (max-width:720px){.mcoach{grid-template-columns:1fr}}
 
 /* ---------- ÜÇ ADIMDA BAŞLA ---------- */
 .start{padding:clamp(56px,8vw,104px) 0;scroll-margin-top:84px;text-align:center}
@@ -739,11 +740,11 @@ section{padding:clamp(72px,10vw,120px) 0}
         <h3 id="modal-hocalar-title" class="modal-title">Hocalarımız</h3>
 
         <article class="mcoach">
+          <h4 class="mcoach-name">Cengiz Adem Yastaş</h4>
           <div class="mcoach-photo">
             <img src="images/hoca-cengiz-adem.jpg" alt="Cengiz Adem Yastaş" loading="lazy">
-            <span class="media-caption">Yastaş</span>
           </div>
-          <div>
+          <div class="mcoach-text">
             <p class="mcoach-title">Kurucu · Milli Sporcu</p>
             <p class="mcoach-highlight">1987'den beri sporun içinde</p>
             <p class="mcoach-bio">Özlem Fitness'ın kurucusu. Milli sporcu olarak dünya dördüncülüğü ve Avrupa ikinciliği dereceleri var. Bugün salonda fitness, bodybuilding, pilates ve özel ders veriyor; ekibindeki eğitmenleri özenle seçiyor ve her üyenin takip edilmesini bizzat denetliyor.</p>
@@ -754,11 +755,11 @@ section{padding:clamp(72px,10vw,120px) 0}
         </article>
 
         <article class="mcoach">
+          <h4 class="mcoach-name">Beklan Tütüncü</h4>
           <div class="mcoach-photo">
             <img src="images/hoca-beklan.jpg" alt="Beklan Tütüncü" loading="lazy">
-            <span class="media-caption">Beklan Tütüncü</span>
           </div>
-          <div>
+          <div class="mcoach-text">
             <p class="mcoach-title">Personal Trainer · Fitness ve Ağırlık Antrenmanı</p>
             <p class="mcoach-highlight">Vücut geliştirmede Türkiye 4.'sü</p>
             <p class="mcoach-bio">Sporun içinde birden fazla alanda yetişmiş bir eğitmen. Boks, yüzme ve bilek güreşinde lisanslı sporcu olarak yer aldı; vücut geliştirme yarışmalarında Türkiye dördüncülüğü ve beşincilik dereceleri var. Haliç Üniversitesi'nden personal trainer ve sporcu koçluğu eğitimleri aldı. Farklı salonlarda antrenörlük ve salon müdürlüğü yaparak edindiği tecrübeyi bugün Özlem Fitness'a taşıyor. Salonda özellikle fitness ve ağırlık antrenmanında üyelerle birebir çalışıyor.</p>
@@ -776,11 +777,11 @@ section{padding:clamp(72px,10vw,120px) 0}
              fotoğrafı (images/hoca-sefa-aybar.jpg) Hayati'nin değil — karıştırılmasın. Hayati'nin kendi
              fotoğrafı gelince buraya eklenecek. -->
         <article class="mcoach">
+          <h4 class="mcoach-name">Hayati İnci</h4>
           <div class="mcoach-photo">
             <div class="ph-empty"></div>
-            <span class="media-caption">Hayati İnci</span>
           </div>
-          <div>
+          <div class="mcoach-text">
             <p class="mcoach-title">Kickboks Antrenörü</p>
             <p class="mcoach-highlight">1977'den beri sporun içinde</p>
             <p class="mcoach-bio">Hayati İnci, spora 1977'de Almanya'da başladı; 1980'de kickboks ve vücut geliştirme sınavlarına girdi. 2002'de Türkiye'ye döndü ve kendi salonu Euro Sport Fitness'ı kurarak kickboks ve vücut geliştirme dersleri verdi. Pandemi döneminde salonunu kapattı, sonrasında Özlem Fitness'ta hoca olarak devam etme kararı aldı.</p>
@@ -791,11 +792,11 @@ section{padding:clamp(72px,10vw,120px) 0}
 
         <!-- HOCA 4 · SEFA AYBAR — bilgisi 2026-10-09'da geldi -->
         <article class="mcoach">
+          <h4 class="mcoach-name">Sefa Aybar</h4>
           <div class="mcoach-photo">
             <img src="images/hoca-sefa-aybar.jpg" alt="Sefa Aybar" loading="lazy">
-            <span class="media-caption">Sefa Aybar</span>
           </div>
-          <div>
+          <div class="mcoach-text">
             <p class="mcoach-title">Personal Trainer · Fitness ve Bodybuilding</p>
             <p class="mcoach-highlight">25 yılı aşkın eğitmenlik deneyimi</p>
             <p class="mcoach-bio">Sefa Aybar, 2000 yılından bu yana fitness ve bodybuilding alanında eğitmenlik yapıyor. Çeyrek asrı aşan bu süreçte iki spor kulübü kurup yönetti, çok sayıda sporcuyla çalıştı ve birçok bodybuilding yarışmacısını sahneye hazırladı. Kadın ve erkek üyelerle kas geliştirme, kilo verme ve fiziksel gelişim hedeflerinde birebir çalışıyor. Hedefin ne olursa olsun, sana uygun bir program kurar ve gelişimini yakından takip eder.</p>
