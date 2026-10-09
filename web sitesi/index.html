@@ -228,6 +228,9 @@ body.modal-open{overflow:hidden}
 .mgallery-dots span{width:6px;height:6px;border-radius:50%;background:var(--line)}
 .mgallery-dots span.on{background:var(--blue)}
 
+/* Yan yana kaydırma yerine ekran genişliğine göre alt satıra sarıp aşağı doğru listelenir */
+.mgallery--wrap .mgallery-track{flex-wrap:wrap;overflow-x:visible;scroll-snap-type:none}
+
 /* Fiyat kutusu (Özel Ders — kart modal içinde) */
 .mprice{margin-top:28px;padding:20px 24px;border-radius:14px;border:1px solid var(--line);background:var(--navy-700)}
 .mprice p{display:flex;justify-content:space-between;gap:16px;padding:8px 0;border-bottom:1px solid var(--line);font-weight:600}
@@ -850,7 +853,7 @@ section{padding:clamp(72px,10vw,120px) 0}
           <div class="mblock-text">
             <p>Kilo vermek, kilo almak, sıkılaşmak ya da kas geliştirmek; hedefin hangisiyse programın ona göre hazırlanır. Doğru teknikle, adım adım ilerlersin.</p>
             <p class="mnote">Hocalarımız: Cengiz Adem Yastaş, Beklan Tütüncü, Sefa Aybar</p>
-            <div class="mgallery mgallery--medium"><div class="mgallery-track" data-gallery="branch-fitness"></div></div>
+            <div class="mgallery mgallery--medium mgallery--wrap"><div class="mgallery-track" data-gallery="branch-fitness"></div></div>
           </div>
         </div>
 
@@ -1563,7 +1566,9 @@ var GALLERIES = {
   ],
   'coach-beklan': [
     { type: 'video', src: 'images/hoca-beklan-ozel-ders-1.mp4' },
-    { type: 'video', src: 'images/hoca-beklan-ozel-ders-2.mp4' }
+    { type: 'video', src: 'images/hoca-beklan-ozel-ders-2.mp4' },
+    { type: 'video', src: 'images/dersler-fitness-1.mp4' },
+    { type: 'video', src: 'images/dersler-fitness-2.mp4' }
   ],
   'coach-hayati': [
     { type: 'video', src: 'images/hoca-hayati-ozel-ders-1.mp4' }
@@ -1572,15 +1577,12 @@ var GALLERIES = {
     { type: 'video', src: 'images/hoca-sefa-ozel-ders-1.mp4' }
   ],
   'branch-fitness': [
-    { type: 'video', src: 'images/dersler-fitness-1.mp4' },
-    { type: 'video', src: 'images/dersler-fitness-2.mp4' },
     { type: 'video', src: 'images/dersler-fitness-3.mp4' },
     { type: 'video', src: 'images/dersler-fitness-4.mp4' }
   ],
   'branch-pilates': [],
   'branch-kickboks': [
     { type: 'video', src: 'images/dersler-kickboks-1.mp4' },
-    { type: 'video', src: 'images/kart-kickboks.mp4', poster: 'images/kart-kickboks-poster.jpg' },
     { type: 'video', src: 'images/dersler-kickboks-2.mp4' },
     { type: 'video', src: 'images/dersler-kickboks-3.mp4' }
   ]
