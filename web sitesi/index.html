@@ -471,7 +471,7 @@ section{padding:clamp(72px,10vw,120px) 0}
 .hours-box h3{margin:0;font-family:var(--head);font-weight:600;font-size:1.02rem}
 .hours-box p{margin:6px 0 0;color:var(--muted);line-height:1.6}
 
-.contact-cta{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin-top:36px}
+.contact-cta{display:flex;flex-direction:column;align-items:stretch;gap:16px;margin-top:36px}
 .btn-green{background:#25D366;color:#063019}
 .btn-green:hover{background:#1fba59}
 
@@ -481,21 +481,14 @@ section{padding:clamp(72px,10vw,120px) 0}
 .map iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:grayscale(.3) contrast(1.05)}
 .map-gate{position:absolute;inset:0;display:grid;place-items:center;gap:12px;text-align:center;padding:20px;background:var(--navy-700);color:var(--muted)}
 .map-gate button{padding:12px 22px;border-radius:10px;border:2px solid var(--blue);background:none;color:var(--ink);font:inherit;font-weight:600;cursor:pointer}
-@media (max-width:560px){.contact-cta{flex-direction:column;align-items:stretch}}
 
-.site-footer{padding:40px 0 calc(32px + 88px);border-top:1px solid var(--line);color:var(--muted);font-size:.85rem;text-align:center}
+.site-footer{padding:40px 0 32px;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem;text-align:center}
 .footer-line{margin:0}
 .footer-line + .footer-line{margin-top:10px}
 .footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;list-style:none;padding:0}
 .footer-links a,.footer-links button{color:var(--muted);text-decoration:none;background:none;border:0;padding:0;font:inherit;cursor:pointer}
 .footer-links a:hover,.footer-links button:hover{color:var(--ink)}
 .footer-links .sep{opacity:.5}
-
-/* Sabit alt köşe butonu — WhatsApp DEĞİL, formu açar (bkz. footer yakınındaki not) */
-.wa-float{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:60;width:56px;height:56px;border-radius:50%;border:0;background:#25D366;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .25s ease;cursor:pointer}
-.wa-float svg{width:28px;height:28px}
-.wa-float.show{opacity:1;pointer-events:auto}
-.wa-float.form-float{background:var(--red)}
 
 /* Çerez bildirimi */
 .cookie-bar{position:fixed;left:0;right:0;bottom:0;z-index:250;background:var(--navy-800);border-top:1px solid var(--line);padding:18px var(--pad);display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;box-shadow:0 -8px 30px rgba(0,0,0,.35)}
@@ -910,7 +903,9 @@ section{padding:clamp(72px,10vw,120px) 0}
 
         <div class="mprice">
           <p><span>Cengiz Adem Yastaş ile özel ders</span><span>15.000 TL / ay</span></p>
-          <p><span>Diğer hocalarımızla özel ders</span><span>10.000 TL / ay</span></p>
+          <p><span>Beklan Tütüncü ile özel ders</span><span>10.000 TL / ay</span></p>
+          <p><span>Hayati İnci ile özel ders</span><span>10.000 TL / ay</span></p>
+          <p><span>Sefa Aybar ile özel ders</span><span>10.000 TL / ay</span></p>
         </div>
 
         <div class="modal-cta">
@@ -948,7 +943,9 @@ section{padding:clamp(72px,10vw,120px) 0}
           <div class="pt-block">
             <h3>Özel Ders</h3>
             <p class="pt-price"><span>Cengiz Adem Yastaş ile</span><span>15.000 TL / ay</span></p>
-            <p class="pt-price"><span>Diğer hocalarımızla</span><span>10.000 TL / ay</span></p>
+            <p class="pt-price"><span>Beklan Tütüncü ile</span><span>10.000 TL / ay</span></p>
+            <p class="pt-price"><span>Hayati İnci ile</span><span>10.000 TL / ay</span></p>
+            <p class="pt-price"><span>Sefa Aybar ile</span><span>10.000 TL / ay</span></p>
             <p class="pt-note">Özel ders aylık pakettir; ayda kaç kez geleceğini sen belirlersin, sıklığını hocanla birlikte planlarsın.</p>
           </div>
 
@@ -1269,7 +1266,6 @@ section{padding:clamp(72px,10vw,120px) 0}
 
       <a class="directions-btn" href="https://www.google.com/maps/search/?api=1&amp;query=%C3%96zlem+Fitness+Center+%C4%B0zzettin+%C3%87al%C4%B1%C5%9Flar+Caddesi+31%2FB+Bah%C3%A7elievler" target="_blank" rel="noopener" data-track="yol_tarifi">
         Yol Tarifi Al
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
       <div class="map" id="mapBox">
         <iframe title="Özlem Fitness Center haritası" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
@@ -1375,12 +1371,6 @@ section{padding:clamp(72px,10vw,120px) 0}
   </div>
 </footer>
 
-<!-- Sabit alt köşe butonu: WhatsApp DEĞİL — formu açar. Sitede WhatsApp'a giden yalnızca 2 bağlantı var
-     (Kurucumuz bölümü + İletişim bölümü), bu buton onların dışında kalır. -->
-<button type="button" class="wa-float form-float" data-open-modal="modal-form" data-form-source="Alt Köşe Butonu" data-track="form_float" aria-label="Ücretsiz analiz için tıkla">
-  <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-</button>
-
 <!-- ÇEREZ BİLDİRİMİ -->
 <div class="cookie-bar" id="cookieBar" hidden role="region" aria-label="Çerez bildirimi">
   <p>Sitemizde, sitenin çalışması için gerekli çerezler ve harita gibi üçüncü taraf hizmetlerin çerezleri kullanılır. Ayrıntılar için <a href="cerez-politikasi.html">Çerez Politikası'na</a> bakabilirsin.</p>
@@ -1427,17 +1417,6 @@ menuBtn.addEventListener("click", () => {
 nav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
   nav.classList.remove("open"); menuBtn.setAttribute("aria-expanded", false);
 }));
-
-/* Sabit WhatsApp butonu: hero ekrandayken gizli, aşağı kaydırınca görünür */
-const waFloat = document.querySelector(".wa-float");
-const heroSection = document.querySelector(".hero");
-if (waFloat && heroSection && "IntersectionObserver" in window) {
-  new IntersectionObserver(([entry]) => {
-    waFloat.classList.toggle("show", !entry.isIntersecting);
-  }).observe(heroSection);
-} else if (waFloat) {
-  waFloat.classList.add("show");
-}
 
 /* ===================== PENCERE (MODAL) MOTORU ===================== */
 (function(){
