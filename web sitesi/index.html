@@ -403,7 +403,6 @@ section{padding:clamp(72px,10vw,120px) 0}
 .membership .head-center{max-width:640px;margin:0 auto}
 .membership h2{margin:0;font-family:var(--head);font-weight:800;font-size:clamp(2rem,4.4vw,3.2rem);letter-spacing:-.015em}
 .membership .lead{margin:14px auto 0;max-width:52ch}
-.anchor{display:block;position:relative;top:-100px;visibility:hidden}
 
 /* Fiyatları güncellemek için SADECE aşağıdaki script'teki MEMBERSHIP_PLANS listesini değiştir — tablo tek yerden besleniyor. */
 .pricing{list-style:none;margin:40px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;text-align:left}
@@ -552,7 +551,7 @@ section{padding:clamp(72px,10vw,120px) 0}
       <a href="#hizmetler">Hizmetler</a>
       <a href="#antrenorler">Hocalarımız</a>
       <a href="#hakkimizda">Hakkımızda</a>
-      <a href="#uyelik">Üyelik</a>
+      <a href="#hizmetler" data-open-modal="modal-saatlik" data-track="nav_uyelik">Üyelik</a>
       <a href="#sss">SSS</a>
       <a href="#iletisim">İletişim</a>
     </nav>
@@ -801,15 +800,23 @@ section{padding:clamp(72px,10vw,120px) 0}
           </div>
         </article>
 
-        <!-- HOCA 4 · SEFA AYBAR — fotoğraf ve özel ders videosu hazır, unvan/biyografi henüz gelmedi.
-             Bilgiler gelince mcoach-title satırı gerçek unvanla, bio/tags gerçek metinle değiştirilecek. -->
+        <!-- HOCA 4 · SEFA AYBAR — bilgisi 2026-10-09'da geldi -->
         <article class="mcoach">
           <div class="mcoach-photo">
             <img src="images/hoca-sefa-aybar.jpg" alt="Sefa Aybar" loading="lazy">
             <span class="media-caption">Sefa Aybar</span>
           </div>
           <div>
-            <p class="mcoach-title">Bilgileri yakında eklenecek</p>
+            <p class="mcoach-title">Personal Trainer · Fitness ve Bodybuilding</p>
+            <p class="mcoach-highlight">25 yılı aşkın eğitmenlik deneyimi</p>
+            <p class="mcoach-bio">Sefa Aybar, 2000 yılından bu yana fitness ve bodybuilding alanında eğitmenlik yapıyor. Çeyrek asrı aşan bu süreçte iki spor kulübü kurup yönetti, çok sayıda sporcuyla çalıştı ve birçok bodybuilding yarışmacısını sahneye hazırladı. Kadın ve erkek üyelerle kas geliştirme, kilo verme ve fiziksel gelişim hedeflerinde birebir çalışıyor. Hedefin ne olursa olsun, sana uygun bir program kurar ve gelişimini yakından takip eder.</p>
+            <ul class="mcheck">
+              <li>2000'den bu yana fitness ve bodybuilding eğitmenliği</li>
+              <li>İki spor kulübünün kurucusu ve yöneticisi</li>
+              <li>Birçok bodybuilding yarışmacısı yetiştirme deneyimi</li>
+              <li>Kas geliştirme, kilo verme ve yarışmacı hazırlığında birebir çalışma</li>
+            </ul>
+            <ul class="tags"><li>Fitness</li><li>Bodybuilding</li><li>Personal Training</li><li>Yarışmacı Hazırlığı</li></ul>
             <div class="mgallery mgallery--small"><div class="mgallery-track" data-gallery="coach-sefa"></div></div>
           </div>
         </article>
@@ -876,7 +883,7 @@ section{padding:clamp(72px,10vw,120px) 0}
             Ücretsiz Analiz İçin Tıkla
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </button>
-          <button type="button" class="btn btn-line" data-close-nav="#uyelik" data-track="dersler_ucretler">
+          <button type="button" class="btn btn-line" data-open-modal="modal-saatlik" data-track="dersler_ucretler">
             Ücret ve Üyelik Seçenekleri
           </button>
         </div>
@@ -919,17 +926,69 @@ section{padding:clamp(72px,10vw,120px) 0}
     </div>
   </div>
 
-  <!-- KART 5 PENCERESİ · SAATLİK / GÜNLÜK DERS — program ve fiyat Cengiz Hoca'dan gelmeden içerik eklenmeyecek, site bu içerik olmadan yayına girmeyecek -->
+  <!-- KART 5 PENCERESİ · SAATLİK / GÜNLÜK DERS — Üyelik ve Ücretler içeriği 2026-10-09'da buraya taşındı.
+       Saatlik/günlük derse özgü program ve fiyat Cengiz Hoca'dan gelince en alta eklenecek. -->
   <div class="modal" id="modal-saatlik" hidden>
     <div class="modal-backdrop" data-close></div>
     <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-saatlik-title">
       <button type="button" class="modal-close" data-close aria-label="Kapat">&times;</button>
       <div class="modal-scroll">
         <h3 id="modal-saatlik-title" class="modal-title">Saatlik / Günlük Ders</h3>
-        <div class="mblock-media" style="aspect-ratio:16/9;margin-top:32px"><div class="ph-empty"></div></div>
+
+        <div class="membership">
+          <div class="head-center">
+            <h2>Üyelik ve Ücretler</h2>
+            <p class="lead">Üyeliğin seçtiğin tek branş için geçerlidir. Sana en uygun planı birlikte seçelim.</p>
+          </div>
+
+          <ul class="pricing" id="pricingGrid" aria-label="Üyelik planları"></ul>
+
+          <ul class="m-notes">
+            <li>Üyelik tek branş içindir: fitness, pilates ya da kickboks.</li>
+            <li>Hastalık, iş seyahati ve benzeri özel durumlarda üyeliğini dondurabilirsin. 3, 6 ve 12 aylık paketlerde tüm üyelik süresi boyunca toplam 3 dondurma hakkın vardır. 1 aylık üyelik dondurulamaz.</li>
+          </ul>
+
+          <div class="pt-block">
+            <h3>Özel Ders</h3>
+            <p class="pt-price"><span>Cengiz Adem Yastaş ile</span><span>15.000 TL / ay</span></p>
+            <p class="pt-price"><span>Diğer hocalarımızla</span><span>10.000 TL / ay</span></p>
+            <p class="pt-note">Özel ders aylık pakettir; ayda kaç kez geleceğini sen belirlersin, sıklığını hocanla birlikte planlarsın.</p>
+          </div>
+
+          <button type="button" class="btn btn-red" data-open-modal="modal-form" data-form-source="Üye Ol" data-track="uye_ol">
+            Üye Ol
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <p class="m-sub">Hangi planın sana uygun olduğundan emin değil misin? <button type="button" data-open-modal="modal-form" data-form-source="Üyelik Analiz" data-track="uyelik_analiz_iste">Ücretsiz analiz iste</button>, birlikte karar verelim.</p>
+        </div>
+
+        <p style="margin-top:40px;color:var(--muted);text-align:center">Saatlik ve günlük ders seçenekleri ile ücretleri netleşince burada ayrıca eklenecek.</p>
       </div>
     </div>
   </div>
+  <script>
+  (function(){
+    /* Fiyat güncellemek için SADECE bu listeyi değiştir — tablo tek yerden besleniyor. */
+    var MEMBERSHIP_PLANS=[
+      {label:"1 Aylık",price:"3.000 TL"},
+      {label:"3 Aylık",price:"7.500 TL",sub:"aylık 2.500 TL"},
+      {label:"6 Aylık",price:"12.000 TL",sub:"aylık 2.000 TL"},
+      {label:"12 Aylık",price:"15.000 TL",sub:"aylık 1.250 TL",featured:true,badge:"En Avantajlı"}
+    ];
+    var grid=document.getElementById('pricingGrid');
+    MEMBERSHIP_PLANS.forEach(function(p){
+      var li=document.createElement('li');
+      li.className='plan'+(p.featured?' plan--featured':'');
+      var html='';
+      if(p.badge)html+='<span class="plan-badge">'+p.badge+'</span>';
+      html+='<span class="plan-period">'+p.label+'</span>';
+      html+='<span class="plan-price">'+p.price+'</span>';
+      if(p.sub)html+='<span class="plan-sub">'+p.sub+'</span>';
+      li.innerHTML=html;
+      grid.appendChild(li);
+    });
+  })();
+  </script>
 
   <!-- KART 6 PENCERESİ · SPOR YAPANLAR İÇİN BESLENME — B0-B5 görselleri Unsplash/Pexels'ten onaya gönderildi, onaylanınca ph-empty yerine konacak -->
   <div class="modal" id="modal-beslenme" hidden>
@@ -1110,61 +1169,6 @@ section{padding:clamp(72px,10vw,120px) 0}
     </div>
   </section>
 
-  <!-- ÜYELİK VE ÜCRETLER (güncelleme 2026-10-08: "Üye Ol" formu açar, WhatsApp bağlantısı yok, dondurma notu + diğer hocalar fiyatı eklendi.
-       Fiyat değiştirmek için SADECE alt script'teki MEMBERSHIP_PLANS listesini güncelle. -->
-  <section class="membership" id="uyelik">
-    <div class="wrap">
-      <div class="head-center">
-        <h2>Üyelik ve Ücretler</h2>
-        <p class="lead">Üyeliğin seçtiğin tek branş için geçerlidir. Sana en uygun planı birlikte seçelim.</p>
-      </div>
-
-      <ul class="pricing" id="pricingGrid" aria-label="Üyelik planları"></ul>
-
-      <ul class="m-notes">
-        <li>Üyelik tek branş içindir: fitness, pilates ya da kickboks.</li>
-        <li>Hastalık, iş seyahati ve benzeri özel durumlarda üyeliğini dondurabilirsin. 3, 6 ve 12 aylık paketlerde tüm üyelik süresi boyunca toplam 3 dondurma hakkın vardır. 1 aylık üyelik dondurulamaz.</li>
-      </ul>
-
-      <div class="pt-block">
-        <span class="anchor" id="fiyat-ozel-ders"></span>
-        <h3>Özel Ders</h3>
-        <p class="pt-price"><span>Cengiz Adem Yastaş ile</span><span>15.000 TL / ay</span></p>
-        <p class="pt-price"><span>Diğer hocalarımızla</span><span>10.000 TL / ay</span></p>
-        <p class="pt-note">Özel ders aylık pakettir; ayda kaç kez geleceğini sen belirlersin, sıklığını hocanla birlikte planlarsın.</p>
-      </div>
-
-      <button type="button" class="btn btn-red" data-open-modal="modal-form" data-form-source="Üye Ol" data-track="uye_ol">
-        Üye Ol
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </button>
-      <p class="m-sub">Hangi planın sana uygun olduğundan emin değil misin? <button type="button" data-open-modal="modal-form" data-form-source="Üyelik Analiz" data-track="uyelik_analiz_iste">Ücretsiz analiz iste</button>, birlikte karar verelim.</p>
-    </div>
-  </section>
-  <script>
-  (function(){
-    /* Fiyat güncellemek için SADECE bu listeyi değiştir — tablo tek yerden besleniyor. */
-    var MEMBERSHIP_PLANS=[
-      {label:"1 Aylık",price:"3.000 TL"},
-      {label:"3 Aylık",price:"7.500 TL",sub:"aylık 2.500 TL"},
-      {label:"6 Aylık",price:"12.000 TL",sub:"aylık 2.000 TL"},
-      {label:"12 Aylık",price:"15.000 TL",sub:"aylık 1.250 TL",featured:true,badge:"En Avantajlı"}
-    ];
-    var grid=document.getElementById('pricingGrid');
-    MEMBERSHIP_PLANS.forEach(function(p){
-      var li=document.createElement('li');
-      li.className='plan'+(p.featured?' plan--featured':'');
-      var html='';
-      if(p.badge)html+='<span class="plan-badge">'+p.badge+'</span>';
-      html+='<span class="plan-period">'+p.label+'</span>';
-      html+='<span class="plan-price">'+p.price+'</span>';
-      if(p.sub)html+='<span class="plan-sub">'+p.sub+'</span>';
-      li.innerHTML=html;
-      grid.appendChild(li);
-    });
-  })();
-  </script>
-
   <!-- BÖLÜM 6 · SIK SORULAN SORULAR (Emel Hanım kodu, 2026-09-28) -->
   <section class="faq" id="sss" aria-labelledby="faq-title">
     <div class="wrap faq-grid">
@@ -1195,7 +1199,7 @@ section{padding:clamp(72px,10vw,120px) 0}
         <!-- 4 · ÜCRETLER -->
         <details class="qa">
           <summary>Üyelik ücretleri ne kadar?</summary>
-          <p>Güncel fiyatları <a href="#uyelik">Üyelik ve ücretler</a> bölümünde bulabilirsin.</p>
+          <p>Güncel fiyatları <a href="#" data-open-modal="modal-saatlik">Üyelik ve ücretler</a> bölümünde bulabilirsin.</p>
         </details>
 
         <!-- 5 · ULAŞIM -->
@@ -1581,9 +1585,6 @@ var GALLERIES = {
     { type: 'video', src: 'images/dersler-kickboks-3.mp4' }
   ]
 };
-/* Sefa Aybar (HOCA 4) eklendi — fotoğraf+video hazır, ama unvan/vurgu satırı/biyografi/etiketler henüz
-   gelmedi. Bilgiler gelince satır 804 civarındaki .mcoach-title "Bilgileri yakında eklenecek" yerine
-   gerçek unvan + mcoach-highlight + mcoach-bio + tags eklenecek. */
 
 document.querySelectorAll('[data-gallery]').forEach(function(container){
   var items = GALLERIES[container.getAttribute('data-gallery')] || [];
