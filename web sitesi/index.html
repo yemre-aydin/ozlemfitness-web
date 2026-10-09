@@ -213,23 +213,17 @@ body.modal-open{overflow:hidden}
 
 .modal-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:48px}
 
-/* Modal içi galeri (boşken düz açık gri çerçeve, yazısız) */
+/* Modal içi galeri (boşken düz açık gri çerçeve, yazısız).
+   Fazla öğe sağa yan yana kaymaz; ekran genişliğine göre alt satıra sarıp aşağı doğru listelenir. */
 .mgallery{margin-top:40px}
 .mgallery h4{margin:0 0 16px;font-family:var(--head);font-weight:700;font-size:1.25rem}
-.mgallery-track{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px}
-.mgallery-track::-webkit-scrollbar{display:none}
-.mgallery-item{flex:0 0 auto;scroll-snap-align:start;border-radius:12px;overflow:hidden;background:#D9DCE2}
+.mgallery-track{display:flex;flex-wrap:wrap;gap:12px}
+.mgallery-item{flex:0 0 auto;border-radius:12px;overflow:hidden;background:#D9DCE2}
 .mgallery-item img,.mgallery-item video{width:100%;height:100%;object-fit:cover;display:block}
 .mgallery--large .mgallery-item{width:min(480px,78vw);aspect-ratio:4/3}
 .mgallery--medium .mgallery-item{width:min(300px,62vw);aspect-ratio:4/3}
 .mgallery--small{margin-top:16px}
 .mgallery--small .mgallery-item{width:84px;height:84px}
-.mgallery-dots{display:flex;gap:6px;justify-content:center;margin-top:10px}
-.mgallery-dots span{width:6px;height:6px;border-radius:50%;background:var(--line)}
-.mgallery-dots span.on{background:var(--blue)}
-
-/* Yan yana kaydırma yerine ekran genişliğine göre alt satıra sarıp aşağı doğru listelenir */
-.mgallery--wrap .mgallery-track{flex-wrap:wrap;overflow-x:visible;scroll-snap-type:none}
 
 /* Fiyat kutusu (Özel Ders — kart modal içinde) */
 .mprice{margin-top:28px;padding:20px 24px;border-radius:14px;border:1px solid var(--line);background:var(--navy-700)}
@@ -692,19 +686,19 @@ section{padding:clamp(72px,10vw,120px) 0}
 
         <h4 class="msection-title">Hakkımızda</h4>
         <div class="mblock">
-          <div class="mblock-media"><div class="ph-empty"></div></div>
+          <div class="mblock-media"><img src="images/salon-foto-1.jpg" alt="" loading="lazy"></div>
           <div class="mblock-text"><p>Özlem Fitness, 2004 yılında tek bir inançla kuruldu: Herkes, her yaşta daha güçlü ve daha dinç bir bedene sahip olabilir. O günden bu yana aynı tutkuyla çalışıyoruz.</p></div>
         </div>
         <div class="mblock mblock--right">
-          <div class="mblock-media"><div class="ph-empty"></div></div>
+          <div class="mblock-media"><img src="images/salon-foto-2.jpg" alt="" loading="lazy"></div>
           <div class="mblock-text"><p>Burada yaşın, geçmişin ya da başlangıç noktan fark etmez. Yıllardır spor yapan da, hayatında ilk kez bir salona adım atan da burada kendine uygun bir yol bulur. Gücünü geliştirmek, formunu korumak ve hareketin verdiği o canlılığı yeniden hissetmek için hiçbir zaman geç değil; önemli olan doğru rehberle ve doğru teknikle başlamak.</p></div>
         </div>
         <div class="mblock">
-          <div class="mblock-media"><div class="ph-empty"></div></div>
+          <div class="mblock-media"><img src="images/salon-foto-3.jpg" alt="" loading="lazy"></div>
           <div class="mblock-text"><p>Biz spora birkaç haftalık bir antrenman olarak değil, ömür boyu sürecek bir yaşam biçimi olarak bakıyoruz. Düzenli hareket; yıllar geçtikçe bedeninin daha esnek ve daha dik kalmasına, günlük hayatı daha az ağrıyla ve daha rahat yaşamana yardımcı olur. Amacımız seni birkaç haftalığına değil, yıllar boyunca sağlıklı ve güçlü tutmak.</p></div>
         </div>
         <div class="mblock mblock--right">
-          <div class="mblock-media"><div class="ph-empty"></div></div>
+          <div class="mblock-media"><img src="images/salon-foto-4.jpg" alt="" loading="lazy"></div>
           <div class="mblock-text"><p>Özlem Fitness, adını kuruluşunda emeği geçen ve kendisi de bir vücut geliştirme sporcusu olan Özlem'den alıyor. Aynı yıl kurulan Özlem Spor Kulübü ve Derneği bugün de aktif. Milli sporcu kurucumuz Cengiz Adem Yastaş ve deneyimli kadromuzla, ilk günkü heyecanla buradayız. <strong>Sporla başla, sağlıkla devam et.</strong></p></div>
         </div>
 
@@ -853,7 +847,7 @@ section{padding:clamp(72px,10vw,120px) 0}
           <div class="mblock-text">
             <p>Kilo vermek, kilo almak, sıkılaşmak ya da kas geliştirmek; hedefin hangisiyse programın ona göre hazırlanır. Doğru teknikle, adım adım ilerlersin.</p>
             <p class="mnote">Hocalarımız: Cengiz Adem Yastaş, Beklan Tütüncü, Sefa Aybar</p>
-            <div class="mgallery mgallery--medium mgallery--wrap"><div class="mgallery-track" data-gallery="branch-fitness"></div></div>
+            <div class="mgallery mgallery--medium"><div class="mgallery-track" data-gallery="branch-fitness"></div></div>
           </div>
         </div>
 
