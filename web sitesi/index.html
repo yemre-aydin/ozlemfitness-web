@@ -801,7 +801,18 @@ section{padding:clamp(72px,10vw,120px) 0}
           </div>
         </article>
 
-        <!-- HOCA 4 — isim, unvan, biyografi ve fotoğraf gelmeden eklenmeyecek. -->
+        <!-- HOCA 4 · SEFA AYBAR — fotoğraf ve özel ders videosu hazır, unvan/biyografi henüz gelmedi.
+             Bilgiler gelince mcoach-title satırı gerçek unvanla, bio/tags gerçek metinle değiştirilecek. -->
+        <article class="mcoach">
+          <div class="mcoach-photo">
+            <img src="images/hoca-sefa-aybar.jpg" alt="Sefa Aybar" loading="lazy">
+            <span class="media-caption">Sefa Aybar</span>
+          </div>
+          <div>
+            <p class="mcoach-title">Bilgileri yakında eklenecek</p>
+            <div class="mgallery mgallery--small"><div class="mgallery-track" data-gallery="coach-sefa"></div></div>
+          </div>
+        </article>
 
         <div class="modal-cta">
           <button type="button" class="btn btn-red" data-open-modal="modal-form" data-form-source="Hocalarımız" data-track="form_hocalar">
@@ -1553,6 +1564,9 @@ var GALLERIES = {
   'coach-hayati': [
     { type: 'video', src: 'images/hoca-hayati-ozel-ders-1.mp4' }
   ],
+  'coach-sefa': [
+    { type: 'video', src: 'images/hoca-sefa-ozel-ders-1.mp4' }
+  ],
   'branch-fitness': [
     { type: 'video', src: 'images/dersler-fitness-1.mp4' },
     { type: 'video', src: 'images/dersler-fitness-2.mp4' },
@@ -1567,9 +1581,9 @@ var GALLERIES = {
     { type: 'video', src: 'images/dersler-kickboks-3.mp4' }
   ]
 };
-/* Sefa Aybar — 4. hoca olacak, ama henüz unvan/biyografi gelmedi (bkz. proje kuralı: isim+unvan+biyografi+
-   portre olmadan profil açılmaz). Fotoğrafı (images/hoca-sefa-aybar.jpg) ve özel ders videosu
-   (images/hoca-sefa-ozel-ders-1.mp4) hazır, bilgiler gelince HOCA 4 olarak eklenecek. */
+/* Sefa Aybar (HOCA 4) eklendi — fotoğraf+video hazır, ama unvan/vurgu satırı/biyografi/etiketler henüz
+   gelmedi. Bilgiler gelince satır 804 civarındaki .mcoach-title "Bilgileri yakında eklenecek" yerine
+   gerçek unvan + mcoach-highlight + mcoach-bio + tags eklenecek. */
 
 document.querySelectorAll('[data-gallery]').forEach(function(container){
   var items = GALLERIES[container.getAttribute('data-gallery')] || [];
