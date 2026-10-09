@@ -174,9 +174,9 @@ body.modal-open{overflow:hidden}
 
 /* Modal içi görsel+yazı blok yerleşimi (bilgisayarda yan yana, telefonda üst-alt) */
 .mblock{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,48px);align-items:center;margin-top:40px}
-.mblock:first-of-type{margin-top:0}
 .mblock-media{position:relative;aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:var(--navy-700)}
 .mblock-media img,.mblock-media video{width:100%;height:100%;object-fit:cover;display:block}
+.mblock-media--contain img{object-fit:contain}
 .mblock-media .ph-empty{position:absolute;inset:0;background:#2A3347}
 .mblock--right .mblock-media{order:2}
 .mblock--right .mblock-text{order:1}
@@ -1017,7 +1017,7 @@ section{padding:clamp(72px,10vw,120px) 0}
         </div>
 
         <div class="mblock">
-          <div class="mblock-media"><img src="images/beslenme-salata.jpg" alt="" loading="lazy"></div>
+          <div class="mblock-media mblock-media--contain"><img src="images/beslenme-salata.jpg" alt="" loading="lazy"></div>
           <div class="mblock-text">
             <h4>Sebze ve Demir</h4>
             <ul class="mcheck">
