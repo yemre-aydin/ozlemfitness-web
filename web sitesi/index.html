@@ -174,6 +174,7 @@ body.modal-open{overflow:hidden}
 
 /* Modal içi görsel+yazı blok yerleşimi (bilgisayarda yan yana, telefonda üst-alt) */
 .mblock{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,48px);align-items:center;margin-top:40px}
+.mblock--text-only{grid-template-columns:1fr}
 .mblock-media{position:relative;aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:var(--navy-700)}
 .mblock-media img,.mblock-media video{width:100%;height:100%;object-fit:cover;display:block}
 .mblock-media--contain img{object-fit:contain}
@@ -181,10 +182,6 @@ body.modal-open{overflow:hidden}
 .mblock--right .mblock-media{order:2}
 .mblock--right .mblock-text{order:1}
 .mblock-text h4{margin:0 0 10px;font-family:var(--head);font-weight:700;font-size:1.3rem}
-/* Ders başlığı görselin üst kısmında (gradyanlı okunurluk şeridiyle) */
-.media-caption{position:absolute;left:0;right:0;top:0;z-index:2;padding:18px 20px;
-  background:linear-gradient(180deg,rgba(6,14,28,.82) 0%,rgba(6,14,28,0) 100%);
-  font-family:var(--head);font-weight:800;font-size:1.3rem;color:#fff;letter-spacing:-.01em}
 .mblock p{margin:0;color:var(--muted);line-height:1.65}
 .mblock-text p+p{margin-top:10px}
 .mblock p strong{color:var(--ink);font-weight:700}
@@ -197,6 +194,8 @@ body.modal-open{overflow:hidden}
   .mblock{grid-template-columns:1fr;gap:16px}
   .mblock-media{order:-1}
   .mblock--right .mblock-media,.mblock--right .mblock-text{order:0}
+  .mblock-text{display:contents}
+  .mblock-text h4{order:-2}
 }
 
 /* Modal içi görselsiz kutu bölümler (Neye önem veriyoruz? / Salonda neler bekliyor?) */
@@ -832,36 +831,27 @@ section{padding:clamp(72px,10vw,120px) 0}
         <p class="minto">Hedefin ne olursa olsun, sana uygun bir yol var. Kilo vermek, kilo almak, sıkılaşmak, güç kazanmak ya da sadece daha sağlıklı hissetmek… Burada her hedef ciddiye alınır. <strong>Hocan bu yolda seninle birlikte yürür; gelişimini adım adım takip eder, notunu tutar ve hedefine ulaşana kadar seni yalnız bırakmaz.</strong> Üyeliğin seçtiğin tek branş için geçerlidir; dilediğin branşı seçer, kendi yoluna başlarsın.</p>
         <hr class="mdivider">
 
-        <div class="mblock">
-          <div class="mblock-media">
-            <div class="ph-empty"></div>
-            <span class="media-caption">Fitness ve Ağırlık Antrenmanı</span>
-          </div>
+        <div class="mblock mblock--text-only">
           <div class="mblock-text">
+            <h4>Fitness ve Ağırlık Antrenmanı</h4>
             <p>Kilo vermek, kilo almak, sıkılaşmak ya da kas geliştirmek; hedefin hangisiyse programın ona göre hazırlanır. Doğru teknikle, adım adım ilerlersin.</p>
             <p class="mnote">Hocalarımız: Cengiz Adem Yastaş, Beklan Tütüncü, Sefa Aybar</p>
             <div class="mgallery mgallery--medium"><div class="mgallery-track" data-gallery="branch-fitness"></div></div>
           </div>
         </div>
 
-        <div class="mblock mblock--right">
-          <div class="mblock-media">
-            <div class="ph-empty"></div>
-            <span class="media-caption">Pilates</span>
-          </div>
+        <div class="mblock mblock--text-only">
           <div class="mblock-text">
+            <h4>Pilates</h4>
             <p>Birebir pilates derslerinde duruşunu, esnekliğini ve kor gücünü geliştirirsin.</p>
             <p class="mnote">Hoca: Cengiz Adem Yastaş</p>
             <div class="mgallery mgallery--medium"><div class="mgallery-track" data-gallery="branch-pilates"></div></div>
           </div>
         </div>
 
-        <div class="mblock">
-          <div class="mblock-media">
-            <div class="ph-empty"></div>
-            <span class="media-caption">Kickboks</span>
-          </div>
+        <div class="mblock mblock--text-only">
           <div class="mblock-text">
+            <h4>Kickboks</h4>
             <p>Birebir kickboks dersleriyle hem kondisyonunu hem özgüvenini geliştirirsin.</p>
             <p class="mnote">Hoca: Hayati İnci</p>
             <div class="mgallery mgallery--medium"><div class="mgallery-track" data-gallery="branch-kickboks"></div></div>
