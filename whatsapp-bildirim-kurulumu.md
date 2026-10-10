@@ -47,10 +47,12 @@ Sekme adı şu an "Untitled" duruyor — dilersen açıp alt sekmeye çift tıkl
  * 2) Verilen Web App URL'sini index.html'deki FORM_ENDPOINT_URL'ye yapıştır.
  */
 
+var SPREADSHEET_ID = "1-uoC7MkGRYOOvMLcqaPyJiXREalBm0MtKDA2QKdvfv0";
+
 function doPost(e) {
   try {
     var data = JSON.parse(e.postData.contents);
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getActiveSheet();
 
     var simdi = new Date();
     var tarihSaat = Utilities.formatDate(simdi, "Europe/Istanbul", "dd.MM.yyyy HH:mm");
