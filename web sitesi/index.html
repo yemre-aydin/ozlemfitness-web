@@ -57,8 +57,21 @@ window.loadMetaPixel = function(){
   fbq('init', window.OZLEM_PIXEL_ID);
   fbq('track', 'PageView');
 };
+
+window.OZLEM_GA4_ID = 'G-YNPKN3EVN4';
+window.loadGA4 = function(){
+  if (window._ozlemGa4Loaded) return;
+  window._ozlemGa4Loaded = true;
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=' + window.OZLEM_GA4_ID;
+  document.head.appendChild(s);
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function(){ window.dataLayer.push(arguments); };
+  gtag('js', new Date());
+  gtag('config', window.OZLEM_GA4_ID);
+};
 </script>
-<!-- Google Analytics 4 kodu buraya eklenecek (Yunus Emre). -->
 
 <style>
 :root{
@@ -1424,12 +1437,25 @@ document.querySelectorAll(".js-wa").forEach(a => {
   a.rel = "noopener";
 });
 
-/* Ölçüm: tıklamalar Meta Pixel ve GA4 kuruluysa olay olarak gönderilir */
+/* Ölçüm: her data-track tıklaması Meta'ya "Contact" olarak düşer.
+   GA4 tarafında ise yalnızca form gönderimi (generate_lead), WhatsApp tıklamaları
+   ve Üye Ol tıklaması ayrı etkinlik olarak gönderilir (aşağıdaki özel bloklarda). */
 document.querySelectorAll("[data-track]").forEach(el => {
   el.addEventListener("click", () => {
     const name = el.dataset.track;
     if (typeof fbq === "function") fbq("track", "Contact", { content_name: name });
-    if (typeof gtag === "function") gtag("event", "generate_lead", { method: name });
+  });
+});
+
+document.querySelectorAll(".js-wa[data-track]").forEach(el => {
+  el.addEventListener("click", () => {
+    if (typeof gtag === "function") gtag("event", "whatsapp_tiklama", { method: el.dataset.track });
+  });
+});
+
+document.querySelectorAll('[data-track="uye_ol"]').forEach(el => {
+  el.addEventListener("click", () => {
+    if (typeof gtag === "function") gtag("event", "uye_ol_tiklama", {});
   });
 });
 
@@ -1665,6 +1691,7 @@ document.querySelectorAll('[data-gallery]').forEach(function(container){
       ticari_ileti_izni: form.pazarlama_onay.checked ? 'Evet' : 'Hayır',
       gonderim_tarihi: new Date().toISOString()
     };
+    if (typeof gtag === "function") gtag("event", "generate_lead", { method: payload.kaynak });
     if (FORM_ENDPOINT_URL) {
       fetch(FORM_ENDPOINT_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }).catch(function(){});
     } else if (window.console) {
@@ -1723,12 +1750,18 @@ document.querySelectorAll('[data-gallery]').forEach(function(container){
     try { localStorage.setItem(KEY, v); } catch (e) {}
     bar.hidden = true;
     if (v === 'reject') showGate();
-    if (v === 'accept' && typeof window.loadMetaPixel === 'function') window.loadMetaPixel();
+    if (v === 'accept') {
+      if (typeof window.loadMetaPixel === 'function') window.loadMetaPixel();
+      if (typeof window.loadGA4 === 'function') window.loadGA4();
+    }
   }
 
   var stored = null;
   try { stored = localStorage.getItem(KEY); } catch (e) {}
-  if (stored === 'accept' && typeof window.loadMetaPixel === 'function') window.loadMetaPixel();
+  if (stored === 'accept') {
+    if (typeof window.loadMetaPixel === 'function') window.loadMetaPixel();
+    if (typeof window.loadGA4 === 'function') window.loadGA4();
+  }
   if (stored) {
     bar.hidden = true;
     if (stored === 'reject') showGate();
