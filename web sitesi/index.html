@@ -156,7 +156,7 @@ p{margin:0}
 .modal[hidden]{display:none}
 .modal-backdrop{position:absolute;inset:0;background:rgba(6,14,28,.84)}
 .modal-panel{position:relative;z-index:1;width:100%;max-width:980px;max-height:88vh;border:1px solid var(--line);border-radius:22px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(0,0,0,.5);
-  background:linear-gradient(rgba(6,14,28,.85),rgba(6,14,28,.92)),url("images/hero-bg.jpg") center/cover no-repeat}
+  background:linear-gradient(rgba(6,14,28,.74),rgba(6,14,28,.82)),url("images/hero-bg.jpg") center/cover no-repeat}
 .modal-close{position:absolute;top:16px;right:16px;z-index:4;width:44px;height:44px;min-width:44px;min-height:44px;border-radius:50%;background:rgba(6,14,28,.65);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:1.7rem;line-height:1;display:grid;place-items:center;cursor:pointer}
 .modal-close:hover{background:rgba(6,14,28,.9)}
 .modal-scroll{overflow-y:auto;padding:clamp(28px,4vw,56px)}
@@ -358,6 +358,11 @@ section{padding:clamp(72px,10vw,120px) 0}
 @media (max-width:820px){
   .founder-grid{grid-template-columns:1fr}
   .milestones{grid-template-columns:repeat(2,1fr)}
+  .founder-text{display:contents}
+  .founder-eyebrow{order:-4}
+  .founder-name{order:-3}
+  .founder-title{order:-2}
+  .founder-highlight{order:-1}
 }
 @media (max-width:480px){.milestones{grid-template-columns:1fr}}
 
@@ -1073,7 +1078,7 @@ section{padding:clamp(72px,10vw,120px) 0}
       <div class="founder-photo">
         <img src="images/hoca-cengiz-adem.jpg" alt="Cengiz Adem Yastaş, salondaki madalya ve belge duvarının önünde" width="720" height="900" loading="lazy">
       </div>
-      <div>
+      <div class="founder-text">
         <p class="founder-eyebrow">KURUCUMUZ</p>
         <h2 id="founder-title" class="founder-name">Cengiz Adem Yastaş</h2>
         <p class="founder-title">Kurucu · Milli Sporcu · Uluslararası Antrenör</p>
