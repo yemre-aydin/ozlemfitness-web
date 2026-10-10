@@ -39,8 +39,26 @@
 }
 </script>
 
-<!-- ÖLÇÜM: Meta Pixel ve Google Analytics 4 kodları buraya eklenecek (Yunus Emre).
-     KVKK kapsamında çerez bildirimi gereksinimi ayrıca netleştirilmeli. -->
+<!-- ÖLÇÜM: Meta Pixel (Özlem Fitness WEB). Yalnızca çerez barında "Kabul Et" seçilince
+     yüklenir — çağrısı en altta çerez onayı script'inde yapılır, burada sadece tanımlanır. -->
+<script>
+window.OZLEM_PIXEL_ID = '1609413474198126';
+window.loadMetaPixel = function(){
+  if (window._ozlemPixelLoaded) return;
+  window._ozlemPixelLoaded = true;
+  !function(f,b,e,v,n,t,s){
+    if (f.fbq) return;
+    n = f.fbq = function(){ n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
+    if (!f._fbq) f._fbq = n;
+    n.push = n; n.loaded = true; n.version = '2.0'; n.queue = [];
+    t = b.createElement(e); t.async = true; t.src = v;
+    s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
+  }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', window.OZLEM_PIXEL_ID);
+  fbq('track', 'PageView');
+};
+</script>
+<!-- Google Analytics 4 kodu buraya eklenecek (Yunus Emre). -->
 
 <style>
 :root{
@@ -1705,10 +1723,12 @@ document.querySelectorAll('[data-gallery]').forEach(function(container){
     try { localStorage.setItem(KEY, v); } catch (e) {}
     bar.hidden = true;
     if (v === 'reject') showGate();
+    if (v === 'accept' && typeof window.loadMetaPixel === 'function') window.loadMetaPixel();
   }
 
   var stored = null;
   try { stored = localStorage.getItem(KEY); } catch (e) {}
+  if (stored === 'accept' && typeof window.loadMetaPixel === 'function') window.loadMetaPixel();
   if (stored) {
     bar.hidden = true;
     if (stored === 'reject') showGate();
