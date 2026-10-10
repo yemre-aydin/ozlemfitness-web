@@ -1,0 +1,47 @@
+Tek şifre var: fitcrm-test-2026 — dört test hesabının hepsi aynı.
+
+E-posta	Şifre
+sahip@ornek.test	fitcrm-test-2026
+yonetici@ornek.test	fitcrm-test-2026
+gorevli@ornek.test	fitcrm-test-2026
+egitmen@ornek.test	fitcrm-test-2026
+Başka hesap yok. Şifre prisma/seed.ts içinde tanımlı; npm run db:reset çalıştırırsan aynı hesaplar aynı şifreyle yeniden kurulur.
+1. Şimdi bakmak için — test hesapları
+Şifre: fitcrm-test-2026
+
+E-posta	Rol
+sahip@ornek.test	Sahip
+yonetici@ornek.test	Yönetici
+gorevli@ornek.test	Görevli
+egitmen@ornek.test	Eğitmen
+Rollerin ne gördüğünü karşılaştırmak için bunlarla gir. Gerçek veri girmeden önce kapatılacaklar.
+
+2. Gerçek hesabını açmak — terminalden
+
+cd "C:\Users\user\Downloads\Digians academy\Şİrket Doktoru kampı\ClaudeCode\fitcrm"
+npm run kullanici:ekle
+Sırayla sorar:
+
+Ad soyad — Yunus Emre Aydın
+E-posta — giriş bununla yapılıyor, gerçek olması gerekmiyor ama hatırlanabilir olsun
+Rol — boş bırakırsan sahip
+Şifre — en az 10 karakter, sadece rakam olamaz
+Şifre terminalde görünür; terminal zaten sende olduğu için bilinçli bir tercih. Hesap açılınca npm run dev → /giris.
+
+Not: Bu hesabı ben açamam, şifreyi bana yazdırmaman gerekiyor. Sen çalıştıracaksın.
+
+3. Personel hesapları — arayüzden
+Sahip olarak girdikten sonra Kullanıcılar ekranı:
+
+Ad soyad, e-posta, rol gir
+Sistem 12 haneli geçici şifre üretir ve bir kez ekranda gösterir
+O şifreyi kişiye ilet (WhatsApp, sözlü — fark etmez, tek kullanımlık)
+Kişi ilk girişte kendi şifresini belirlemek zorunda, atlayamıyor
+Şifre kaybolursa aynı ekrandan "Şifre sıfırla" — yeni geçici şifre üretir ve o kişinin PIN'li cihazlarını da iptal eder.
+
+Kayıt ol linki yok. Giriş ekranında kendi kendine hesap açma yolu bilinçli olarak bırakılmadı; kullanıcıyı yalnızca sahip ekler.
+
+Test hesaplarını temizleme
+Kullanıcılar ekranından Kapat butonu yeterli — kapalı hesap giriş yapamaz ve PIN'li cihazları otomatik iptal olur. Tamamen silinmelerini istersen silme butonu ekleyebilirim, şu an sadece kapatma var.
+
+Bir noktayı netleştireyim: "üyelik" ile salon üyelerinin kendi giriş yapması kastedildiyse o ayrı bir iş. Şu an sisteme sadece personel giriyor; üyeler giremiyor. Üyenin kendi bilgilerini girmesi BACKLOG 13'te (self-servis kayıt formu), üyenin kendi ilerlemesini görebileceği bir portal ise henüz listede bile yok. Hangisini kastettiysen ona göre devam edelim.

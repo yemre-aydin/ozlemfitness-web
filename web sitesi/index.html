@@ -1657,6 +1657,44 @@ document.querySelectorAll('[data-gallery]').forEach(function(container){
   });
 });
 
+/* ===================== KAYNAK TAKİBİ (UTM) =====================
+   Ziyaretçi siteye hangi bağlantıyla geldiyse (utm_source, utm_medium vb.)
+   o bilgi oturum boyunca saklanır ve form gönderilirken birlikte iletilir.
+   Böylece CRM'de "bu lead hangi reklamdan geldi" sorusu cevaplanabilir.
+
+   Çerez değil, sessionStorage kullanılıyor: sekme kapanınca siliniyor,
+   reklam takibi yapmıyor, yalnızca kişinin kendi doldurduğu formun kaynağını
+   işaretliyor. Bu yüzden çerez onayına bağlı değil. Meta ve GA4 çerezleri
+   (_fbp/_fbc) ise yalnızca onay verildiyse okunuyor — aşağıdaki form
+   bölümünde. */
+(function(){
+  var ANAHTAR = 'ozlemfitness_kaynak';
+  var ALANLAR = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','gclid','fbclid'];
+
+  function mevcut(){
+    try { return JSON.parse(sessionStorage.getItem(ANAHTAR) || 'null'); } catch(e){ return null; }
+  }
+
+  var q = new URLSearchParams(window.location.search);
+  var yeni = {};
+  var bulundu = false;
+  ALANLAR.forEach(function(a){
+    var v = q.get(a);
+    if (v) { yeni[a] = v.slice(0, 200); bulundu = true; }
+  });
+
+  /* Kaynak bilgisi ilk girişte yazılır; sonraki sayfa gezinmelerinde
+     korunur. Yeni bir UTM'li bağlantıyla gelinirse üstüne yazılır. */
+  if (bulundu || !mevcut()) {
+    yeni.ilk_sayfa = window.location.pathname + window.location.search;
+    yeni.yonlendiren = document.referrer ? document.referrer.slice(0, 300) : '';
+    if (!bulundu && !document.referrer) yeni.utm_source = 'dogrudan';
+    try { sessionStorage.setItem(ANAHTAR, JSON.stringify(yeni)); } catch(e){}
+  }
+
+  window.kaynakBilgisi = function(){ return mevcut() || {}; };
+})();
+
 /* ===================== FORM ===================== */
 (function(){
   var daySelect = document.querySelector('#leadForm select[name="dogum_gun"]');
@@ -1668,19 +1706,50 @@ document.querySelectorAll('[data-gallery]').forEach(function(container){
     }
   }
 
-  /* Form şu an SADECE ön yüz: Google Apps Script Web App + CallMeBot kurulumu henüz yapılmadı.
-     Kurulum adımları ve kopyala-yapıştır .gs kodu: ozlemfitness/whatsapp-bildirim-kurulumu.md.
-     Kurulduktan sonra aşağıdaki satırdaki URL'yi Apps Script'in verdiği Web App adresiyle doldur:
-     var FORM_ENDPOINT_URL = "https://script.google.com/macros/s/.../exec";
-     O ana kadar form doğrulanır (KVKK onayı zorunlu) ama veri hiçbir yere gönderilmez, sadece konsola yazılır. */
-  var FORM_ENDPOINT_URL = ""; // YOUR_APPS_SCRIPT_WEB_APP_URL buraya gelecek
+  /* Form gönderimi 2026-10-10'da Google Apps Script Web App'e bağlandı — veriler
+     Özlem Fitness — Form Başvuruları tablosuna satır olarak ekleniyor. WhatsApp
+     bildirimi (CallMeBot) şimdilik yok, bkz. ozlemfitness/whatsapp-bildirim-kurulumu.md. */
+  var FORM_ENDPOINT_URL = "https://script.google.com/macros/s/AKfycbyV_RkX_q0KnSQh2L1mHZTgboqJM8MrdhN0iOsXhAvRj8DUST_7NOYcaT3MyWXRqmmnFQ/exec";
 
   var form = document.getElementById('leadForm');
   if (!form) return;
+
+  /* Benzersiz başvuru kimliği. CRM bu kimlikle mükerrer kaydı ayırt eder:
+     aynı satır iki kez içeri alınsa bile ikinci kez lead açılmaz. */
+  function basvuruKimligi(){
+    try {
+      if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    } catch(e){}
+    return 'b-' + Date.now() + '-' + Math.random().toString(36).slice(2, 10);
+  }
+
+  function cerez(ad){
+    var m = document.cookie.match('(^|; )' + ad + '=([^;]*)');
+    return m ? decodeURIComponent(m[2]) : '';
+  }
+
+  /* IP adresi yalnızca ticari ileti izni verildiyse alınır.
+     Sebebi hukuki: İYS, web üzerinden alınan ticari ileti onaylarında IP
+     adresini zorunlu tutuyor. İzin vermeyen kişinin IP'si hiç sorulmaz. */
+  function ipAl(gerekli){
+    if (!gerekli) return Promise.resolve('');
+    return Promise.race([
+      fetch('https://api.ipify.org?format=json')
+        .then(function(r){ return r.json(); })
+        .then(function(d){ return d.ip || ''; }),
+      new Promise(function(r){ setTimeout(function(){ r(''); }, 1500); })
+    ]).catch(function(){ return ''; });
+  }
+
   form.addEventListener('submit', function(ev){
     ev.preventDefault();
     if (!form.reportValidity()) return;
+
+    var ticariIzin = form.pazarlama_onay.checked;
+    var k = (typeof window.kaynakBilgisi === 'function') ? window.kaynakBilgisi() : {};
+
     var payload = {
+      basvuru_id: basvuruKimligi(),
       kaynak: form.kaynak.value,
       ad: form.ad.value.trim(),
       telefon: form.telefon.value.trim(),
@@ -1688,18 +1757,39 @@ document.querySelectorAll('[data-gallery]').forEach(function(container){
       dogum_ay: form.dogum_ay.value,
       eposta: form.eposta.value.trim(),
       aydinlatma_okundu: form.kvkk_onay.checked ? 'Evet' : 'Hayır',
-      ticari_ileti_izni: form.pazarlama_onay.checked ? 'Evet' : 'Hayır',
-      gonderim_tarihi: new Date().toISOString()
+      ticari_ileti_izni: ticariIzin ? 'Evet' : 'Hayır',
+      gonderim_tarihi: new Date().toISOString(),
+      utm_source: k.utm_source || '',
+      utm_medium: k.utm_medium || '',
+      utm_campaign: k.utm_campaign || '',
+      utm_content: k.utm_content || '',
+      utm_term: k.utm_term || '',
+      yonlendiren: k.yonlendiren || '',
+      ilk_sayfa: k.ilk_sayfa || '',
+      /* Meta tıklama kimlikleri yalnızca çerez onayı verildiyse var olur.
+         İleride Conversions API ile "bu kişi üye oldu" bilgisini Meta'ya geri
+         göndermek için gerekiyorlar. */
+      fbclid: k.fbclid || '',
+      fbp: cerez('_fbp'),
+      fbc: cerez('_fbc'),
+      ip_adresi: ''
     };
+
     if (typeof gtag === "function") gtag("event", "generate_lead", { method: payload.kaynak });
-    if (FORM_ENDPOINT_URL) {
-      fetch(FORM_ENDPOINT_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }).catch(function(){});
-    } else if (window.console) {
-      console.log('[form] backend henüz bağlanmadı, veri hiçbir yere gönderilmedi:', payload);
-    }
+
+    /* Teşekkür ekranı beklemeden açılır; gönderim arkada tamamlanır. */
     form.hidden = true;
     var thanks = form.closest('.modal-scroll').querySelector('.form-thanks');
     if (thanks) thanks.hidden = false;
+
+    ipAl(ticariIzin).then(function(ip){
+      payload.ip_adresi = ip;
+      if (FORM_ENDPOINT_URL) {
+        fetch(FORM_ENDPOINT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) }).catch(function(){});
+      } else if (window.console) {
+        console.log('[form] backend henüz bağlanmadı, veri hiçbir yere gönderilmedi:', payload);
+      }
+    });
   });
 
   /* Form her açılışta (farklı kaynaktan da olsa) temiz başlasın */

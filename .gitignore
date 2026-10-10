@@ -4,3 +4,6 @@ deploy/
 .DS_Store
 brief/
 web sitesi/YUNUS-EMRE-BRIF.md
+
+# Kisisel Claude Code ayarlari (depoya girmez)
+.claude/settings.local.json
