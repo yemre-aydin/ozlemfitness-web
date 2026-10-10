@@ -18,6 +18,7 @@
  * tabloyu boşalt ya da başlık satırını elle tamamla (sıra aşağıdaki gibi).
  */
 
+var SPREADSHEET_ID = '1-uoC7MkGRYOOvMLcqaPyJiXREalBm0MtKDA2QKdvfv0';
 var SAYFA_ADI = 'Form Başvuruları';
 
 var BASLIKLAR = [
@@ -81,7 +82,7 @@ function doPost(e) {
 }
 
 function sayfayiAl() {
-  var kitap = SpreadsheetApp.getActiveSpreadsheet();
+  var kitap = SpreadsheetApp.openById(SPREADSHEET_ID);
   var sayfa = kitap.getSheetByName(SAYFA_ADI) || kitap.getSheets()[0];
 
   // Başlık satırı yoksa yaz
