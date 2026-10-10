@@ -1,17 +1,21 @@
-# Form Bildirimi Kurulumu — Google Sheet + WhatsApp (CallMeBot)
+# Form Bildirimi Kurulumu — Google Sheet (WhatsApp şimdilik yok)
 
 Bu doküman, sitedeki ("Ücretsiz Analiz İçin Tıkla" / "Üye Ol") formunun gönderdiği bilgilerin
-**Google E-Tablosu'na satır olarak eklenmesi** ve **Cengiz Hoca'ya WhatsApp bildirimi** gitmesi için
-gereken kurulumu anlatır.
+**Google E-Tablosu'na satır olarak eklenmesi** için gereken kurulumu anlatır.
+
+**WhatsApp bildirimi (CallMeBot) şimdilik devre dışı** — 2026-10-10'da "şimdilik whatsapp bildirimi
+yokmuş gibi ayarla" denildi. Aşağıdaki Apps Script kodu sadece Sheet'e satır ekler, WhatsApp
+göndermez. CallMeBot kurulumu istenirse dokümanın en altındaki "İleride eklenebilir" bölümünden
+devam edilir.
 
 **Şu anki durum:** Site kodu (`index.html`) şu an SADECE ön yüz olarak çalışıyor — form doğrulanıyor
 (KVKK onayı zorunlu), "Teşekkürler" mesajı gösteriliyor, ama veri hiçbir yere gönderilmiyor (sadece
 tarayıcı konsoluna yazılıyor). Bu kurulum tamamlanıp aşağıdaki adım 4'teki URL `index.html` içine
 yapıştırılınca gerçek gönderim başlayacak.
 
-**Kim kuracak:** Adım 1 (tabloyu oluşturmak) tamamlandı. Adım 2'den itibaren (Apps Script, Dağıt,
-CallMeBot aktivasyonu) Yunus Emre'nin (veya Cengiz Hoca'nın) kendi Google/WhatsApp hesabından yapması
-gerekiyor — Claude bunları deploy edemez çünkü Google hesabı erişimi ve WhatsApp numarası onayı gerektirir.
+**Kim kuracak:** Adım 1 (tabloyu oluşturmak) tamamlandı. Adım 2'den itibaren (Apps Script, Dağıt)
+Yunus Emre'nin kendi Google hesabından yapması gerekiyor — Claude bunu deploy edemez çünkü Google
+hesabı erişimi gerektirir.
 
 ---
 
@@ -33,19 +37,15 @@ Sekme adı şu an "Untitled" duruyor — dilersen açıp alt sekmeye çift tıkl
 
 ```javascript
 /**
- * Özlem Fitness — form bildirimi: Google Sheet'e satır ekler + Cengiz Hoca'ya
- * WhatsApp bildirimi gönderir (CallMeBot üzerinden, ücretsiz).
+ * Özlem Fitness — form bildirimi: Google Sheet'e satır ekler.
+ * WhatsApp bildirimi şimdilik yok (2026-10-10 itibarıyla devre dışı bırakıldı).
  *
  * KURULUM:
- * 1) Aşağıdaki CALLMEBOT_PHONE ve CALLMEBOT_APIKEY değerlerini doldur (Adım 5'e bak).
- * 2) Üstte Dağıt (Deploy) → Yeni dağıtım → Tür: Web uygulaması.
+ * 1) Üstte Dağıt (Deploy) → Yeni dağıtım → Tür: Web uygulaması.
  *    - Yürütülecek kişi: Ben (kendi hesabın)
  *    - Erişebilenler: Herkes
- * 3) Verilen Web App URL'sini index.html'deki FORM_ENDPOINT_URL'ye yapıştır.
+ * 2) Verilen Web App URL'sini index.html'deki FORM_ENDPOINT_URL'ye yapıştır.
  */
-
-var CALLMEBOT_PHONE = "90XXXXXXXXXX";   // Cengiz Hoca'nın WhatsApp numarası, ülke kodu ile, + işareti YOK
-var CALLMEBOT_APIKEY = "XXXXXXX";        // CallMeBot'un sana verdiği apikey (Adım 5)
 
 function doPost(e) {
   try {
@@ -69,20 +69,6 @@ function doPost(e) {
       data.aydinlatma_okundu || "Hayır",
       data.ticari_ileti_izni || "Hayır"
     ]);
-
-    // WhatsApp bildirimi (CallMeBot) — kurulmadıysa (apikey boşsa) bu adım sessizce atlanır
-    if (CALLMEBOT_APIKEY && CALLMEBOT_APIKEY !== "XXXXXXX") {
-      var mesaj = "Yeni form başvurusu!\n" +
-        "Ad: " + (data.ad || "-") + "\n" +
-        "Telefon: " + (data.telefon || "-") + "\n" +
-        "Nereden: " + (data.kaynak || "-") + "\n" +
-        "Tarih: " + tarihSaat;
-      var url = "https://api.callmebot.com/whatsapp.php" +
-        "?phone=" + CALLMEBOT_PHONE +
-        "&text=" + encodeURIComponent(mesaj) +
-        "&apikey=" + CALLMEBOT_APIKEY;
-      try { UrlFetchApp.fetch(url); } catch (waErr) { /* WhatsApp gitmese de Sheet kaydı zaten yapıldı */ }
-    }
 
     return ContentService.createTextOutput(JSON.stringify({ ok: true }))
       .setMimeType(ContentService.MimeType.JSON);
@@ -130,32 +116,29 @@ var FORM_ENDPOINT_URL = "https://script.google.com/macros/s/AKfycb.../exec";
 Kaydet, siteyi yeniden yayınla (bu adım ayrı bir onay/deploy süreci — danışman KVKK/Çerez metinlerini
 onaylamadan site zaten yayına girmeyecek, o yüzden bu değişikliği de aynı yayın turunda yapabilirsin).
 
-## Adım 5 — CallMeBot ile WhatsApp bildirimi (ücretsiz, tek seferlik kurulum)
+## Adım 5 — Test et
 
-CallMeBot, kendi WhatsApp numarandan tek bir onay mesajı göndererek seni "bot"un gönderebileceği
-kişiler listesine ekleyen ücretsiz bir servistir. Cengiz Hoca'nın kendi telefonuyla yapması gerekir:
+1. Siteyi aç, formu bir kez gerçek bilgilerinle (veya test bilgisiyle) doldurup gönder.
+2. Google Sheet'e dön, yeni bir satır eklendiğini kontrol et.
+3. Tarayıcı konsolunda (F12 → Console) kırmızı hata olup olmadığını kontrol et.
+
+## İleride eklenebilir — CallMeBot ile WhatsApp bildirimi
+
+Şu an kurulu değil, istenirse eklenir. CallMeBot, kendi WhatsApp numarandan tek bir onay mesajı
+göndererek seni "bot"un gönderebileceği kişiler listesine ekleyen ücretsiz bir servistir. Cengiz
+Hoca'nın kendi telefonuyla yapması gerekir:
 
 1. Cengiz Hoca'nın WhatsApp'ından şu numarayı rehbere ekle: **+34 644 59 71 20**
 2. Bu numaraya WhatsApp'tan şu mesajı gönder (birebir):
    `I allow callmebot to send me messages`
 3. Birkaç dakika içinde CallMeBot'tan bir **apikey** (sayılardan oluşan bir kod) içeren cevap gelecek.
-4. Bu apikey'i Adım 2'deki kod içinde `CALLMEBOT_APIKEY = "XXXXXXX"` satırına yapıştır, ve
-   `CALLMEBOT_PHONE = "90XXXXXXXXXX"` satırına Cengiz Hoca'nın numarasını (ülke kodu 90 ile, boşluksuz,
-   başında + olmadan) yaz.
-5. Apps Script'te kodu güncelleyip tekrar **Dağıt → Dağıtımları Yönet → Düzenle (kalem ikonu) → Yeni
-   sürüm → Dağıt** yaparak güncellemeyi yayına al (URL değişmez, sadece kod güncellenir).
+4. Bu apikey'i ve Cengiz Hoca'nın numarasını (ülke kodu 90 ile, boşluksuz, başında + olmadan) Claude'a
+   ilet — Apps Script koduna CallMeBot gönderimi yeniden eklenip dağıtılır (URL değişmez).
 
 **Not:** CallMeBot ücretsizdir ama resmî bir WhatsApp Business API değildir; gönderim hacmi çok
 artarsa (günde çok sayıda mesaj) CallMeBot geçici olarak mesajları geciktirebilir veya reddedebilir.
 Düşük hacimli bir salon formu için yeterlidir. Google Sheet'e satır eklenmesi CallMeBot'tan bağımsız
-çalışır — WhatsApp bildirimi gitmese de başvuru kaydı güvenceye alınmış olur.
-
-## Adım 6 — Test et
-
-1. Siteyi aç, formu bir kez gerçek bilgilerinle (veya test bilgisiyle) doldurup gönder.
-2. Google Sheet'e dön, yeni bir satır eklendiğini kontrol et.
-3. Cengiz Hoca'nın WhatsApp'ına bildirim geldi mi bak.
-4. Tarayıcı konsolunda (F12 → Console) kırmızı hata olup olmadığını kontrol et.
+çalışır — WhatsApp bildirimi kurulmasa da başvuru kaydı güvenceye alınmış olur.
 
 ## Google E-Tablosu sütunları (referans)
 
